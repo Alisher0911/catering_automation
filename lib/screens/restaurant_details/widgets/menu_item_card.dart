@@ -194,12 +194,10 @@ class MenuItemCard extends StatelessWidget {
                                           ? Colors.grey
                                           : KPrimaryColor,
                                     ),
+
                                     child: IconButton(
                                         onPressed: () {
-                                          BlocProvider.of<
-                                                      MenuItemQuantityCubit>(
-                                                  context)
-                                              .decrement();
+                                          BlocProvider.of<MenuItemQuantityCubit>(context).decrement();
                                         },
                                         iconSize: 24,
                                         constraints: BoxConstraints(),
@@ -208,12 +206,13 @@ class MenuItemCard extends StatelessWidget {
                                           color: Colors.white,
                                         )),
                                   ),
+
                                   SizedBox(width: 10),
+
                                   Text("${state.quantity}",
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .headline4!
-                                          .copyWith(color: Colors.white)),
+                                    style: Theme.of(context).textTheme.headline4!.copyWith(color: Colors.white)
+                                  ),
+
                                   SizedBox(width: 10),
                                   Container(
                                     padding: const EdgeInsets.all(0.0),
@@ -222,10 +221,7 @@ class MenuItemCard extends StatelessWidget {
                                         color: KPrimaryColor),
                                     child: IconButton(
                                         onPressed: () {
-                                          BlocProvider.of<
-                                                      MenuItemQuantityCubit>(
-                                                  context)
-                                              .increment();
+                                          BlocProvider.of<MenuItemQuantityCubit>(context).increment();
                                         },
                                         iconSize: 24,
                                         constraints: BoxConstraints(),

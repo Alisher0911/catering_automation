@@ -2,9 +2,9 @@ import 'package:catering/models/restaurant_model.dart';
 import 'package:catering/screens/restaurant_details/widgets/menu_item_card.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'widgets/glassmorphism.dart';
-import 'widgets/restaurant_information.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+
+import 'widgets/restaurant_information.dart';
 
 class RestaurantDetailsScreen extends StatelessWidget {
   static const String routeName = '/restaurant-details';
@@ -55,59 +55,11 @@ class RestaurantDetailsScreen extends StatelessWidget {
                     child: Glassmorphism(
                       blur: 15,
                       opacity: 0.1,
-                      child: Container(
-                        width: MediaQuery.of(context).size.width - 40,
-                        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                RatingBarIndicator(
-                                  rating: 2.75,
-                                  itemBuilder: (context, index) => Icon(
-                                    Icons.star_rate_rounded,
-                                    color: Color(0xFF45BFE4),
-                                  ),
-                                  itemCount: 5,
-                                  itemSize: 25.0,
-                                  direction: Axis.horizontal,
-                                ),
-                                SizedBox(height: 5),
-                                Text(
-                                  restaurant.name,
-                                  style: Theme.of(context).textTheme.headline6!.copyWith(color: Colors.white, fontSize: 28),
-                                ),
-                                SizedBox(height: 5),
-                                Text(
-                                  restaurant.address,
-                                  style: Theme.of(context).textTheme.headline4!.copyWith(color: Colors.white.withOpacity(0.6), fontWeight: FontWeight.normal),
-                                )
-                              ],
-                            ),
-
-                            Container(
-                              padding: EdgeInsets.symmetric(horizontal: 10, vertical: 7.5),
-                              decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.circular(15)
-                              ),
-                              child: Icon(
-                                Icons.table_restaurant_rounded,
-                                color: Color(0xFF45BFE4),
-                                size: 25,
-                              ),
-                            )
-                          ]
-                        ),
-                      ),
+                      child: RestaurantInformation(restaurant: restaurant),
                     ),
                   )
                 ],
               ),
-
-              // RestaurantInformation(restaurant: restaurant),
 
               SizedBox(height: 20),
               
@@ -125,6 +77,7 @@ class RestaurantDetailsScreen extends StatelessWidget {
           ),
         ));
   }
+
 
   Widget _buildMenuItems(Restaurant restaurant, BuildContext context, int index) {
     return Column(
@@ -150,58 +103,6 @@ class RestaurantDetailsScreen extends StatelessWidget {
               
           ),
         ),
-        // Column(
-        //     children: restaurant.menuItems
-        //         .where(
-        //             (menuItem) => menuItem.category == restaurant.tags[index])
-        //         .map((menuItem) => Column(
-        //           children: [
-        //               Container(
-        //                 color: Colors.white,
-        //                 padding: const EdgeInsets.symmetric(horizontal: 20),
-        //                 child: ListTile(
-        //                   dense: true,
-        //                   contentPadding: EdgeInsets.zero,
-        //                   title: Text(
-        //                     menuItem.name,
-        //                     style: Theme.of(context).textTheme.headline5
-        //                   ),
-        //                   subtitle: Text(
-        //                     menuItem.description,
-        //                     style: Theme.of(context).textTheme.bodyText1
-        //                   ),
-        //                   trailing: Row(
-        //                     mainAxisAlignment: MainAxisAlignment.end,
-        //                     mainAxisSize: MainAxisSize.min,
-        //                     children: [
-        //                       Text(
-        //                         "\$${menuItem.price}",
-        //                         style: Theme.of(context).textTheme.bodyText1
-        //                       ),
-        //                       BlocBuilder<BasketBloc, BasketState>(
-        //                         builder: (context, state) {
-        //                           return IconButton(
-        //                             onPressed: () {
-        //                               context.read<BasketBloc>().add(AddItem(menuItem));
-        //                             },
-        //                             icon: Icon(
-        //                               Icons.add_circle,
-        //                               color: Theme.of(context).colorScheme.secondary
-        //                             )
-        //                           );
-        //                         },
-        //                       )
-        //                     ]
-        //                   ),
-        //                 ),
-        //               ),
-        //               Divider(
-        //                 height: 2,
-        //               )
-        //           ]
-        //         ))
-        //         .toList()
-        // )
       ],
     );
   }

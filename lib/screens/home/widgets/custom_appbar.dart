@@ -4,8 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class CustomAppBar extends StatelessWidget with PreferredSizeWidget {
-  const CustomAppBar({
+  Widget? actionButton;
+
+  CustomAppBar({
     Key? key,
+    this.actionButton
   }) : super(key: key);
   
 
@@ -42,13 +45,7 @@ class CustomAppBar extends StatelessWidget with PreferredSizeWidget {
               ),
             ),
             actions: [
-              Padding(
-                padding: const EdgeInsets.only(right: 10),
-                child: IconButton(
-                  icon: Icon(CupertinoIcons.person_alt_circle, size: 40),
-                  onPressed: () {},
-                ),
-              ),
+              actionButton ?? Container()
             ],
             title: Column(children: [
               Text(

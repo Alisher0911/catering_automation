@@ -6,6 +6,7 @@ import 'package:catering/widgets/category_box.dart';
 import 'package:catering/widgets/food_search_box.dart';
 import 'package:catering/widgets/promo_box.dart';
 import 'package:catering/widgets/restaurant_card.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -23,7 +24,15 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: Theme.of(context).colorScheme.background,
-        appBar: CustomAppBar(),
+        appBar: CustomAppBar(
+          actionButton: Padding(
+            padding: const EdgeInsets.only(right: 10),
+            child: IconButton(
+              icon: Icon(CupertinoIcons.person_alt_circle, size: 40),
+              onPressed: () {},
+            ),
+          ),
+        ),
         drawer: NavigationDrawer(),
         body: SingleChildScrollView(
           child: Column(

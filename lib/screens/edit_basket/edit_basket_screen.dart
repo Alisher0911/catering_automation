@@ -1,4 +1,5 @@
 import 'package:catering/bloc/basket/basket_bloc.dart';
+import 'package:catering/config/text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -14,32 +15,54 @@ class EditBasketScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-            title: const Text('Edit Basket'),
+        backgroundColor: Theme.of(context).colorScheme.background,
+        appBar: PreferredSize(
+          preferredSize: Size.fromHeight(70),
+          child: Container(
+            decoration: BoxDecoration(
+              boxShadow: const [
+                BoxShadow(
+                  color: Colors.white30,
+                  blurRadius: 3.0,
+                )
+              ],
+              color: Theme.of(context).colorScheme.background
+            ),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                AppBar(
+                  automaticallyImplyLeading: false, 
+                  elevation: 0,
+                  titleSpacing: 0,
+                  centerTitle: true,
+                  backgroundColor: Theme.of(context).colorScheme.background,
+                  leading: IconButton(
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                    icon: Icon(
+                      Icons.arrow_back_ios,
+                      color: Colors.white,
+                    )
+                  ),
+                  title: Text(
+                    "Редактировать заказ",
+                    style: Theme.of(context).textTheme.headline3!.copyWith(color: Color(0xFF8C9099)),
+                  ),
+                ),
+              ],
+            ),
+          ),
         ),
-        bottomNavigationBar: BottomAppBar(
-            child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                    primary: Theme.of(context).colorScheme.secondary,
-                    shape: RoundedRectangleBorder(),
-                    padding: const EdgeInsets.symmetric(horizontal: 50)),
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-                child: Text("Done"))
-          ],
-        )),
         body: Padding(
           padding: const EdgeInsets.all(20.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text('Items',
-                  style: Theme.of(context).textTheme.headline4!.copyWith(
-                      color: Theme.of(context).colorScheme.secondary)),
+                  style: Theme.of(context).textTheme.headline4!.copyWith(color: Colors.white)
+              ),
               BlocBuilder<BasketBloc, BasketState>(
                 builder: (context, state) {
                   if (state is BasketLoading) {
@@ -83,13 +106,8 @@ class EditBasketScreen extends StatelessWidget {
                             children: [
                               Text(
                                 "${state.basket.itemQuantity(state.basket.items).entries.elementAt(index).value}x",
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .headline6!
-                                    .copyWith(
-                                        color: Theme.of(context)
-                                            .colorScheme
-                                            .secondary),
+                                style: Theme.of(context).textTheme.headline6!
+                                          .copyWith(color: Theme.of(context).colorScheme.primary),
                               ),
                               SizedBox(width: 20),
                               Expanded(

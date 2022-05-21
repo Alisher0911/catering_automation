@@ -97,6 +97,7 @@ class _RootScreenState extends State<RootScreen> {
                 return state.basket.items.isEmpty
                   ? Icon(Icons.shopping_cart)
                   : Badge(
+                    position: BadgePosition.topEnd(top: -4),
                     badgeContent: Text(state.basket.numberOfItmems),
                     badgeColor: Color(0xFFFFC529),
                     child: Icon(
@@ -105,7 +106,7 @@ class _RootScreenState extends State<RootScreen> {
                   );
               } else {
                 return Icon(
-                  Icons.shopping_cart,
+                  CupertinoIcons.shopping_cart,
                 );
               }
             },

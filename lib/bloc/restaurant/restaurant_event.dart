@@ -12,3 +12,12 @@ class LoadRestaurants extends RestaurantEvent {
   @override
   List<Object> get props => [];
 }
+
+class LoadRestaurantTables extends RestaurantEvent {
+  final int id;
+
+  const LoadRestaurantTables({required this.id});
+
+  @override
+  List<Object> get props => [];
+}

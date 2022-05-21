@@ -1,6 +1,5 @@
 import 'package:catering/bloc/basket/basket_bloc.dart';
-import 'package:catering/models/voucher_model.dart';
-import 'package:catering/screens/edit_basket/edit_basket_screen.dart';
+import 'package:catering/config/text_styles.dart';
 import 'package:catering/screens/screens.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -18,94 +17,110 @@ class BasketScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(title: const Text('Basket'), actions: [
-          IconButton(
-              onPressed: () {
-                // Navigator.pushNamed(context, "/edit-basket");
-                pushNewScreenWithRouteSettings(
-                  context,
-                  settings: RouteSettings(name: EditBasketScreen.routeName),
-                  screen: EditBasketScreen(),
-                  withNavBar: true,
-                  pageTransitionAnimation: PageTransitionAnimation.cupertino,
-                );
-              },
-              icon: Icon(Icons.edit))
-        ]),
+        backgroundColor: Theme.of(context).colorScheme.background,
+        appBar: PreferredSize(
+          preferredSize: Size.fromHeight(70),
+          child: Container(
+            decoration: BoxDecoration(
+              boxShadow: const [
+                BoxShadow(
+                  color: Colors.white30,
+                  blurRadius: 3.0,
+                )
+              ],
+              color: Theme.of(context).colorScheme.background
+            ),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                AppBar(
+                  automaticallyImplyLeading: false, 
+                  elevation: 0,
+                  titleSpacing: 0,
+                  centerTitle: true,
+                  backgroundColor: Theme.of(context).colorScheme.background,
+                  title: Text(
+                    "Корзина",
+                    style: Theme.of(context).textTheme.headline3!.copyWith(color: Color(0xFF8C9099)),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+
         bottomNavigationBar: BottomAppBar(
+          color: Colors.transparent,
+          child: Padding(
+            padding: EdgeInsets.symmetric(horizontal: 20, vertical: 15),
             child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                    primary: Theme.of(context).colorScheme.secondary,
-                    shape: RoundedRectangleBorder(),
-                    padding: const EdgeInsets.symmetric(horizontal: 50)),
-                onPressed: () {
-                  // Navigator.pushNamed(context, '/checkout');
-                  pushNewScreenWithRouteSettings(
-                    context,
-                    settings: RouteSettings(name: CheckoutScreen.routeName),
-                    screen: CheckoutScreen(),
-                    withNavBar: true,
-                    pageTransitionAnimation: PageTransitionAnimation.cupertino,
-                  );
-                },
-                child: Text("Checkout"))
-          ],
-        )),
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Container(
+                  width: 50,
+                  height: 50,
+                  padding: const EdgeInsets.all(0.0),
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: KPrimaryColor
+                  ),
+                  child: IconButton(
+                      onPressed: () {
+                        pushNewScreenWithRouteSettings(
+                          context,
+                          settings: RouteSettings(name: EditBasketScreen.routeName),
+                          screen: EditBasketScreen(),
+                          withNavBar: true,
+                          pageTransitionAnimation: PageTransitionAnimation.cupertino,
+                        );
+                      },
+                      iconSize: 26,
+                      constraints: BoxConstraints(),
+                      icon: Icon(
+                        Icons.edit,
+                        color: Colors.white,
+                      )),
+                ),
+
+                SizedBox(width: 20),
+
+                Expanded(
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      primary: KPrimaryColor,
+                      minimumSize: const Size.fromHeight(50),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(20.0),
+                      ),
+                    ),    
+                    onPressed: () {
+                      pushNewScreenWithRouteSettings(
+                        context,
+                        settings: RouteSettings(name: CheckoutScreen.routeName),
+                        screen: CheckoutScreen(),
+                        withNavBar: true,
+                        pageTransitionAnimation: PageTransitionAnimation.cupertino,
+                      );
+                    },
+                    child: Text(
+                      "Оплатить",
+                      style: Theme.of(context).textTheme.headline2!.copyWith(color: Colors.white),
+                    )
+                  ),
+                )
+              ],
+            ),
+          ),
+        ),
         body: SingleChildScrollView(
           child: Padding(
             padding: const EdgeInsets.all(20.0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text('Cutlery',
-                    style: Theme.of(context).textTheme.headline4!.copyWith(
-                        color: Theme.of(context).colorScheme.secondary)),
-                Container(
-                  width: double.infinity,
-                  margin: EdgeInsets.only(top: 10, bottom: 10),
-                  padding: EdgeInsets.symmetric(horizontal: 30),
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(5),
-                  ),
-                  child: Row(
-                    children: [
-                      Expanded(
-                        child: Text(
-                          "Do you need a cutlery?",
-                          style: Theme.of(context).textTheme.headline6,
-                        ),
-                      ),
-                      BlocBuilder<BasketBloc, BasketState>(
-                        builder: (context, state) {
-                          if (state is BasketLoading) {
-                            return Center(child: CircularProgressIndicator());
-                          } else if (state is BasketLoaded) {
-                            return SizedBox(
-                                width: 100,
-                                child: SwitchListTile(
-                                  dense: false,
-                                  value: state.basket.cutlery,
-                                  onChanged: (bool? newValue) {
-                                    context
-                                        .read<BasketBloc>()
-                                        .add(ToggleSwitch());
-                                  },
-                                ));
-                          } else {
-                            return Text("Something went wrong.");
-                          }
-                        },
-                      )
-                    ],
-                  ),
-                ),
                 Text('Items',
-                    style: Theme.of(context).textTheme.headline4!.copyWith(
-                        color: Theme.of(context).colorScheme.secondary)),
+                    style: Theme.of(context).textTheme.headline3!.copyWith(
+                        color: Colors.white)),
                 BlocBuilder<BasketBloc, BasketState>(
                   builder: (context, state) {
                     if (state is BasketLoading) {
@@ -153,13 +168,9 @@ class BasketScreen extends StatelessWidget {
                                     children: [
                                       Text(
                                         "${state.basket.itemQuantity(state.basket.items).entries.elementAt(index).value}x",
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .headline6!
-                                            .copyWith(
-                                                color: Theme.of(context)
-                                                    .colorScheme
-                                                    .secondary),
+                                        style: Theme.of(context).textTheme.headline6!.copyWith(
+                                                color: Theme.of(context).colorScheme.primary
+                                              ),
                                       ),
                                       SizedBox(width: 20),
                                       Expanded(
@@ -207,7 +218,7 @@ class BasketScreen extends StatelessWidget {
                               children: [
                                 SizedBox(height: 20),
                                 Text(
-                                  "Delivery in 20 minutes",
+                                  "Настроить доставку",
                                   style: Theme.of(context).textTheme.headline6,
                                 ),
                                 TextButton(
@@ -229,7 +240,7 @@ class BasketScreen extends StatelessWidget {
                                         .copyWith(
                                             color: Theme.of(context)
                                                 .colorScheme
-                                                .secondary),
+                                                .primary),
                                   ),
                                 )
                               ],
@@ -268,7 +279,7 @@ class BasketScreen extends StatelessWidget {
                                     children: [
                                       SizedBox(height: 20),
                                       Text(
-                                        "Do you have a voucher?",
+                                        "У вас есть промокод?",
                                         style: Theme.of(context)
                                             .textTheme
                                             .headline6,
@@ -292,7 +303,7 @@ class BasketScreen extends StatelessWidget {
                                               .copyWith(
                                                   color: Theme.of(context)
                                                       .colorScheme
-                                                      .secondary),
+                                                      .primary),
                                         ),
                                       )
                                     ],
@@ -330,7 +341,7 @@ class BasketScreen extends StatelessWidget {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Text(
-                                  "Subtotal",
+                                  "Сумма заказа",
                                   style: Theme.of(context).textTheme.headline6,
                                 ),
                                 Text(
@@ -344,7 +355,7 @@ class BasketScreen extends StatelessWidget {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Text(
-                                  "Delivery Fee",
+                                  "Плата за доставку",
                                   style: Theme.of(context).textTheme.headline6,
                                 ),
                                 Text(
@@ -358,14 +369,14 @@ class BasketScreen extends StatelessWidget {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Text(
-                                  "Total",
+                                  "Всего",
                                   style: Theme.of(context)
                                       .textTheme
                                       .headline5!
                                       .copyWith(
                                           color: Theme.of(context)
                                               .colorScheme
-                                              .secondary),
+                                              .primary),
                                 ),
                                 Text(
                                   "\$${state.basket.totalString}",
@@ -375,7 +386,7 @@ class BasketScreen extends StatelessWidget {
                                       .copyWith(
                                           color: Theme.of(context)
                                               .colorScheme
-                                              .secondary),
+                                              .primary),
                                 )
                               ],
                             )
@@ -386,7 +397,7 @@ class BasketScreen extends StatelessWidget {
                       }
                     },
                   ),
-                )
+                ),
               ],
             ),
           ),
