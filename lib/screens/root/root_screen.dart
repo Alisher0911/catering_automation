@@ -3,6 +3,7 @@ import 'package:catering/bloc/basket/basket_bloc.dart';
 import 'package:catering/bloc/navbar_navigation/constants/nav_bar_items.dart';
 import 'package:catering/bloc/navbar_navigation/navbar_navigation_cubit.dart';
 import 'package:catering/config/text_styles.dart';
+import 'package:catering/screens/qr_code/qr_scanner_screen.dart';
 import 'package:catering/screens/screens.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -61,7 +62,8 @@ class _RootScreenState extends State<RootScreen> {
       return [
         HomeScreen(),
         LocationScreen(),
-        QRCodeScreen(),
+        // QRCodeScreen(),
+        QRScannerScreen(),
         FavouriteScreen(),
         BasketScreen()
       ];
@@ -84,6 +86,9 @@ class _RootScreenState extends State<RootScreen> {
           iconSize: 40,
           activeColorPrimary: Color(0xFFFFC529),
           inactiveColorPrimary: Color(0xFFFFC529),
+          onPressed: (bc) {
+            Navigator.of(context).push(MaterialPageRoute(builder: (builder) => QRScannerScreen()));
+          }
         ),
         PersistentBottomNavBarItem(
           icon: Icon(CupertinoIcons.heart_fill),
