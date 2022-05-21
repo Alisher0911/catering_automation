@@ -1,0 +1,1 @@
+enum NavbarItem { home, location, qrCode, favourite, basket }
