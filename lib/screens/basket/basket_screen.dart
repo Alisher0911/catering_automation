@@ -65,6 +65,8 @@ class BasketScreen extends StatelessWidget {
                     color: KPrimaryColor
                   ),
                   child: IconButton(
+                      splashColor: Colors.transparent,
+                      highlightColor: Colors.transparent,
                       onPressed: () {
                         pushNewScreenWithRouteSettings(
                           context,

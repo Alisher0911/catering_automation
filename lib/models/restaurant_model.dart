@@ -40,7 +40,7 @@ class Restaurant extends Equatable {
     id: json["id"], 
     name: json["name"] ?? "", 
     address: json["address"] ?? "", 
-    imageUrl: json["imageUrl"] ?? "",
+    imageUrl: json["imageUrl"] ?? "https://images.pexels.com/photos/6267/menu-restaurant-vintage-table.jpg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
     tags: (json["tags"] as List<dynamic>).cast<String>(),
     menuItems: (json["menuItems"] as List).map((i) => MenuItem.fromJson(i)).toList(),
     deliveryTime: json["deliveryTime"] ?? 0, 

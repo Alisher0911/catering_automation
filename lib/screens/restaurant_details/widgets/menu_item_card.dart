@@ -1,20 +1,23 @@
-import 'package:catering/bloc/basket/basket_bloc.dart';
-import 'package:catering/bloc/menu_item_quantity/menuitemquantity_cubit.dart';
-import 'package:catering/config/text_styles.dart';
-import 'package:catering/models/menu_item_model.dart';
-import 'package:catering/screens/restaurant_details/widgets/glassmorphism.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import 'package:catering/bloc/basket/basket_bloc.dart';
+import 'package:catering/bloc/menu_item_quantity/menuitemquantity_cubit.dart';
+import 'package:catering/config/text_styles.dart';
+import 'package:catering/models/menu_item_model.dart' as restaurant_menu_item;
+import 'package:catering/screens/restaurant_details/widgets/glassmorphism.dart';
+
 class MenuItemCard extends StatelessWidget {
-  final MenuItem menuItem;
+  final restaurant_menu_item.MenuItem menuItem;
 
   const MenuItemCard({Key? key, required this.menuItem}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
+      splashColor: Colors.transparent,
+      highlightColor: Colors.transparent,
       onTap: () {
         _showMenuItemDetails(context, menuItem);
       },
@@ -70,6 +73,8 @@ class MenuItemCard extends StatelessWidget {
                           shape: BoxShape.circle,
                         ),
                         child: IconButton(
+                            splashColor: Colors.transparent,
+                            highlightColor: Colors.transparent,
                             onPressed: () {
                             },
                             // iconSize: 16,
@@ -152,6 +157,8 @@ class MenuItemCard extends StatelessWidget {
                               color: Theme.of(context).colorScheme.background,
                               borderRadius: BorderRadius.circular(15)),
                           child: IconButton(
+                            splashColor: Colors.transparent,
+                            highlightColor: Colors.transparent,
                             onPressed: () {
                               Navigator.of(bc).pop();
                             },
@@ -196,6 +203,8 @@ class MenuItemCard extends StatelessWidget {
                                     ),
 
                                     child: IconButton(
+                                        splashColor: Colors.transparent,
+                                        highlightColor: Colors.transparent,
                                         onPressed: () {
                                           BlocProvider.of<MenuItemQuantityCubit>(context).decrement();
                                         },
@@ -220,6 +229,8 @@ class MenuItemCard extends StatelessWidget {
                                         shape: BoxShape.circle,
                                         color: KPrimaryColor),
                                     child: IconButton(
+                                        splashColor: Colors.transparent,
+                                        highlightColor: Colors.transparent,
                                         onPressed: () {
                                           BlocProvider.of<MenuItemQuantityCubit>(context).increment();
                                         },

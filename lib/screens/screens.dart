@@ -1,6 +1,7 @@
 export 'home/home_screen.dart';
 export 'location/location_screen.dart';
 export 'qr_code/qr_code_screen.dart';
+export 'qr_code/qr_scanner_screen.dart';
 export 'favourite/favourite_screen.dart';
 export 'basket/basket_screen.dart';
 

@@ -1,47 +1,73 @@
+import 'package:catering/bloc/authentication/authentication_bloc.dart';
+import 'package:catering/bloc/userdata/userdata_bloc.dart';
 import 'package:catering/config/text_styles.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class NavigationDrawer extends StatelessWidget {
-  const NavigationDrawer({ Key? key }) : super(key: key);
+  const NavigationDrawer({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-
     Widget _buildDrawerItem(String text, IconData icon) {
       return ListTile(
-        horizontalTitleGap: 0,
-        title: Text(
-          text,
-          style: Theme.of(context).textTheme.headline3!.copyWith(fontWeight: FontWeight.normal, color: drawerTextColor),
-        ),
-        leading: Icon(
-          icon,
-          color: appColor1,
-        ),
-        onTap: () {
-          Navigator.pop(context);
-        }
-      );
+          horizontalTitleGap: 0,
+          title: Text(
+            text,
+            style: Theme.of(context).textTheme.headline3!.copyWith(
+                fontWeight: FontWeight.normal, color: drawerTextColor),
+          ),
+          leading: Icon(
+            icon,
+            color: appColor1,
+          ),
+          onTap: () {
+            Navigator.pop(context);
+          });
     }
 
-    final drawerHeader = UserAccountsDrawerHeader(
-      decoration: BoxDecoration(
-        color: Theme.of(context).colorScheme.background
-      ),
-      margin: EdgeInsets.only(top: 20),
-      accountName: Text(
-        "Sanat Sherim",
-        style: Theme.of(context).textTheme.headline2!.copyWith(color: Colors.white),
-      ),
-      accountEmail: Text(
-        "mister.sherim@gmail.com",
-        style: Theme.of(context).textTheme.headline6!.copyWith(color: drawerTextColor),
-      ),
-      currentAccountPicture: const CircleAvatar(
-        // child: FlutterLogo(size: 42.0),
-        backgroundImage: AssetImage("assets/sanat.jpeg"),
-      ),
+    final drawerHeader = BlocBuilder<UserDataBloc, UserDataState>(
+      builder: (context, state) {
+        if (state is UserDataLoading) {
+          return const Center(
+            child: CircularProgressIndicator(),
+          );
+        } else if (state is UserDataLoaded) {
+          return UserAccountsDrawerHeader(
+            decoration: BoxDecoration(
+              color: Theme.of(context).colorScheme.background
+            ),
+            margin: EdgeInsets.only(top: 20),
+            accountName: Text(
+              state.user.username,
+              style: Theme.of(context).textTheme.headline2!.copyWith(color: Colors.white),
+            ),
+            accountEmail: Text(
+              state.user.email,
+              style: Theme.of(context).textTheme.headline6!.copyWith(color: drawerTextColor),
+            ),
+            currentAccountPicture: const CircleAvatar(
+              // child: FlutterLogo(size: 42.0),
+              backgroundImage: AssetImage("assets/sanat.jpeg"),
+            ),
+          );
+        } else if (state is UserDataError) {
+          return SizedBox(
+            height: 150,
+            child: Center(
+              child: Text("Не удалось загрузить данные", style: Theme.of(context).textTheme.headline4!.copyWith(color: Colors.white))
+            ),
+          );
+        } else {
+          return SizedBox(
+            height: 150,
+            child: Center(
+              child: Text("Не удалось загрузить данные", style: Theme.of(context).textTheme.headline4!.copyWith(color: Colors.white))
+            ),
+          );
+        }
+      },
     );
 
     final drawerItems = Column(
@@ -65,7 +91,7 @@ class NavigationDrawer extends StatelessWidget {
             alignment: Alignment.bottomLeft,
             child: ElevatedButton.icon(
               style: ButtonStyle(
-                backgroundColor: MaterialStateProperty.all<Color>(KPrimaryColor),
+                backgroundColor:MaterialStateProperty.all<Color>(KPrimaryColor),
                 shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                   RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(50.0),
@@ -73,8 +99,7 @@ class NavigationDrawer extends StatelessWidget {
                 )
               ),
               onPressed: () {
-                // Navigator.of(context, rootNavigator: true).pushReplacement(MaterialPageRoute(builder: (context) => LoginScreen()));
-                Navigator.of(context, rootNavigator: true).pushReplacementNamed("/login");
+                BlocProvider.of<AuthenticationBloc>(context).add(LoggedOut());
               },
               icon: Icon(
                 CupertinoIcons.square_arrow_left_fill,
@@ -87,10 +112,9 @@ class NavigationDrawer extends StatelessWidget {
       ],
     );
 
-
     return Drawer(
       backgroundColor: Theme.of(context).colorScheme.background,
-      child: drawerItems,
+      child: drawerItems
     );
   }
 }

@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:bloc/bloc.dart';
 import 'package:catering/models/booking_table_model.dart';
 import 'package:catering/models/restaurant_model.dart';
@@ -9,14 +11,18 @@ part 'restaurant_state.dart';
 
 class RestaurantBloc extends Bloc<RestaurantEvent, RestaurantState> {
   final  RestaurantRepository _restaurantRepository;
+  StreamSubscription? _restaurantSubscription;
 
-  RestaurantBloc(this._restaurantRepository) : super(RestaurantLoading()) {
-    on<LoadRestaurants>(_onLoadRestaurants);
-    on<LoadRestaurantTables>(_onLoadRestaurantTables);
-  }
+  RestaurantBloc({required RestaurantRepository restaurantRepository}) 
+    : _restaurantRepository = restaurantRepository,
+    super(RestaurantLoading()) {
+      on<LoadRestaurants>(_onLoadRestaurants);
+      on<LoadRestaurantTables>(_onLoadRestaurantTables);
+    }
 
 
   void _onLoadRestaurants(LoadRestaurants event, Emitter<RestaurantState> emit) async {
+    _restaurantSubscription?.cancel();
     emit(RestaurantLoading());
     try {
       final restaurants = await _restaurantRepository.getRestaurants();
@@ -27,6 +33,7 @@ class RestaurantBloc extends Bloc<RestaurantEvent, RestaurantState> {
   }
 
   void _onLoadRestaurantTables(LoadRestaurantTables event, Emitter<RestaurantState> emit) async {
+    _restaurantSubscription?.cancel();
     emit(RestaurantTablesLoading());
     try {
       final tables = await _restaurantRepository.getRestaurantTables(event.id);
@@ -34,5 +41,11 @@ class RestaurantBloc extends Bloc<RestaurantEvent, RestaurantState> {
     } catch(e) {
       emit(RestaurantError(e.toString()));
     }
+  }
+
+  @override
+  Future<void> close() {
+    _restaurantSubscription?.cancel();
+    return super.close();
   }
 }

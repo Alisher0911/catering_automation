@@ -34,6 +34,8 @@ class CustomAppBar extends StatelessWidget with PreferredSizeWidget {
             centerTitle: true,
             backgroundColor: Theme.of(context).colorScheme.background,
             leading: InkWell(
+              splashColor: Colors.transparent,
+              highlightColor: Colors.transparent,
               onTap: () {
                 Scaffold.of(context).openDrawer();
               },

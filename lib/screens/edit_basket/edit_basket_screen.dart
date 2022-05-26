@@ -38,6 +38,8 @@ class EditBasketScreen extends StatelessWidget {
                   centerTitle: true,
                   backgroundColor: Theme.of(context).colorScheme.background,
                   leading: IconButton(
+                    splashColor: Colors.transparent,
+                    highlightColor: Colors.transparent,
                     onPressed: () {
                       Navigator.of(context).pop();
                     },
@@ -118,6 +120,8 @@ class EditBasketScreen extends StatelessWidget {
                               ),
 
                               IconButton(
+                                splashColor: Colors.transparent,
+                                highlightColor: Colors.transparent,
                                 visualDensity: VisualDensity.compact,
                                 onPressed: () {
                                   context.read<BasketBloc>().add(RemoveAllItem(state.basket.itemQuantity(state.basket.items).keys.elementAt(index)));
@@ -125,6 +129,8 @@ class EditBasketScreen extends StatelessWidget {
                                 icon: Icon(Icons.delete)
                               ),
                               IconButton(
+                                splashColor: Colors.transparent,
+                                highlightColor: Colors.transparent,
                                 visualDensity: VisualDensity.compact,
                                 onPressed: () {
                                   context.read<BasketBloc>().add(RemoveItem(state.basket.itemQuantity(state.basket.items).keys.elementAt(index)));
@@ -132,6 +138,8 @@ class EditBasketScreen extends StatelessWidget {
                                 icon: Icon(Icons.remove_circle)
                               ),
                               IconButton(
+                                splashColor: Colors.transparent,
+                                highlightColor: Colors.transparent,
                                 visualDensity: VisualDensity.compact,
                                 onPressed: () {
                                   context.read<BasketBloc>().add(AddItem(state.basket.itemQuantity(state.basket.items).keys.elementAt(index)));

@@ -13,6 +13,8 @@ class RestaurantCard extends StatelessWidget {
   Widget build(BuildContext context) {
 
     return InkWell(
+      splashColor: Colors.transparent,
+      highlightColor: Colors.transparent,
       onTap: () {
         //Navigator.pushNamed(context, '/restaurant-details', arguments: restaurant);
         pushNewScreenWithRouteSettings(

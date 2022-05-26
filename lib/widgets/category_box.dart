@@ -1,7 +1,9 @@
+import 'package:catering/bloc/restaurant/restaurant_bloc.dart';
 import 'package:catering/models/category_model.dart';
 import 'package:catering/models/restaurant_model.dart';
 import 'package:catering/screens/screens.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 
 class CategoryBox extends StatelessWidget {
@@ -11,15 +13,31 @@ class CategoryBox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final List<Restaurant> restaurants = Restaurant.restaurants.where((restaurant) => restaurant.tags.contains(category.name)).toList();
+    
+    // final restaurants = Restaurant.restaurants.where((restaurant) => restaurant.tags.contains(category.name));
 
     return InkWell(
+      splashColor: Colors.transparent,
+      highlightColor: Colors.transparent,
       onTap: () {
         //Navigator.pushNamed(context, '/restaurant-listing', arguments: restaurants);
         pushNewScreenWithRouteSettings(
           context,
           settings: RouteSettings(name: RestaurantListingScreen.routeName),
-          screen: RestaurantListingScreen(restaurants: restaurants),
+          screen: BlocBuilder<RestaurantBloc, RestaurantState>(
+            builder: (context, state) {
+              if (state is RestaurantLoading) {
+                return Center(
+                  child: CircularProgressIndicator(),
+                );
+              }
+              else if (state is RestaurantLoaded) {
+                return RestaurantListingScreen(restaurants: state.restaurants.where((restaurant) => restaurant.tags.contains(category.name)).toList());
+              } else {
+                return Container();
+              }
+            },
+          ),
           withNavBar: true,
           pageTransitionAnimation: PageTransitionAnimation.cupertino,
         );
@@ -52,7 +70,9 @@ class CategoryBox extends StatelessWidget {
                   ),
                 ]
               ),
-              child: category.image,
+              child: Image.network(
+                category.urlImage
+              ),
             ),
           ),
     

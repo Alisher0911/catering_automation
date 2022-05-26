@@ -49,6 +49,8 @@ class FoodSearchBox extends StatelessWidget {
             child: IconButton(
                 icon: Icon(Icons.menu),
                 color: Theme.of(context).colorScheme.primary,
+                splashColor: Colors.transparent,
+                highlightColor: Colors.transparent,
                 onPressed: () {
                   // Navigator.pushNamed(context, '/filter');
                   pushNewScreenWithRouteSettings(

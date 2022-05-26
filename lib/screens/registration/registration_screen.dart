@@ -1,6 +1,9 @@
+import 'package:catering/bloc/register/register_bloc.dart';
 import 'package:catering/config/text_styles.dart';
+import 'package:catering/repositories/user_repository.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'widgets/registration_form.dart';
 
@@ -102,7 +105,15 @@ class RegistrationScreen extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      RegistrationForm(formKey: _registrationFormKey, emailController: emailController, passwordController: passwordController, isHidden: _isHidden, usernameController: usernameController, confirmPasswordController: confirmPasswordController,),
+                      BlocProvider(
+                        create: (context) { 
+                          return RegisterBloc(
+                            userRepository: context.read<UserRepository>(),
+                          );
+                        },
+                        child: RegistrationForm(formKey: _registrationFormKey, emailController: emailController, passwordController: passwordController, isHidden: _isHidden, usernameController: usernameController, confirmPasswordController: confirmPasswordController),
+                      ),
+                      
 
                       SizedBox(height: 60),
 

@@ -1,6 +1,8 @@
+import 'package:catering/bloc/category/category_bloc.dart';
 import 'package:catering/bloc/restaurant/restaurant_bloc.dart';
 import 'package:catering/models/category_model.dart';
 import 'package:catering/models/promo_model.dart';
+import 'package:catering/repositories/category_repository.dart';
 import 'package:catering/screens/home/widgets/navigation_drawer.dart';
 import 'package:catering/widgets/category_box.dart';
 import 'package:catering/widgets/food_search_box.dart';
@@ -28,6 +30,8 @@ class HomeScreen extends StatelessWidget {
           actionButton: Padding(
             padding: const EdgeInsets.only(right: 10),
             child: IconButton(
+              splashColor: Colors.transparent,
+              highlightColor: Colors.transparent,
               icon: Icon(CupertinoIcons.person_alt_circle, size: 40),
               onPressed: () {},
             ),
@@ -39,18 +43,45 @@ class HomeScreen extends StatelessWidget {
             mainAxisSize: MainAxisSize.max,
             children: [
               SizedBox(height: 10),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: SizedBox(
-                  height: 100,
-                  child: ListView.builder(
-                      scrollDirection: Axis.horizontal,
-                      shrinkWrap: true,
-                      itemCount: Category.categories.length,
-                      itemBuilder: ((context, index) {
-                        return CategoryBox(
-                            category: Category.categories[index]);
-                      })),
+              BlocProvider(
+                create: (context) => CategoryBloc(categoryRepository: context.read<CategoryRepository>())..add(LoadCategories()),
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: SizedBox(
+                    height: 100,
+                    
+                    child: BlocBuilder<CategoryBloc, CategoryState>(
+                      builder: (context, state) {
+                        if (state is CategoryLoading) {
+                          return const Center(
+                            child: CircularProgressIndicator(),
+                          );
+                        } 
+                        else if (state is CategoryLoaded) {
+                          return ListView.builder(
+                            scrollDirection: Axis.horizontal,
+                            shrinkWrap: true,
+                            itemCount: state.categories.length,
+                            itemBuilder: ((context, index) {
+                              return CategoryBox(
+                                category: state.categories[index]
+                              );
+                            })
+                          );
+                        }
+                        else if (state is CategoryError) {
+                          return Center(
+                            child: Text("Failed to load categories", style: TextStyle(color: Colors.white)),
+                          );
+                        }
+                        else {
+                          return Center(
+                            child: Text("Failed to load categories", style: TextStyle(color: Colors.white)),
+                          );
+                        }
+                      },
+                    ),
+                  ),
                 ),
               ),
 
@@ -100,11 +131,13 @@ class HomeScreen extends StatelessWidget {
                   }
                   else if (state is RestaurantError) {
                     return Center(
-                      child: Text(state.error.toString(), style: TextStyle(color: Colors.white)),
+                      child: Text("Failed to load restaurants", style: TextStyle(color: Colors.white)),
                     );
                   }
                   else {
-                    return Container();
+                    return Center(
+                      child: Text("Failed to load restaurants", style: TextStyle(color: Colors.white)),
+                    );
                   }
                 },
               )

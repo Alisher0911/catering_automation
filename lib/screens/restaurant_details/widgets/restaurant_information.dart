@@ -52,6 +52,8 @@ class RestaurantInformation extends StatelessWidget {
           ],
         ),
         InkWell(
+          splashColor: Colors.transparent,
+          highlightColor: Colors.transparent,
           onTap: () {
             _showTables(context, restaurant);
           },
@@ -92,7 +94,7 @@ void _showTables(context, Restaurant restaurant) {
       builder: (BuildContext bc) {
         return BlocProvider(
           create: (context) =>
-              RestaurantBloc(context.read<RestaurantRepository>())
+              RestaurantBloc(restaurantRepository: context.read<RestaurantRepository>())
                 ..add(LoadRestaurantTables(id: restaurant.id)),
           child: DraggableScrollableSheet(
             expand: false,

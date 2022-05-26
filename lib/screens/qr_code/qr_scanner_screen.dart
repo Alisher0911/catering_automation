@@ -1,8 +1,10 @@
 import 'dart:io';
 
 import 'package:catering/config/text_styles.dart';
+import 'package:catering/screens/screens.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
 
 class QRScannerScreen extends StatefulWidget {
@@ -105,6 +107,14 @@ class _QRScannerScreenState extends State<QRScannerScreen> {
   void _onQRViewCreated(QRViewController controller) {
     this.controller = controller;
     controller.scannedDataStream.listen((scanData) {
+      this.controller!.pauseCamera();
+      pushNewScreenWithRouteSettings(
+        context,
+        settings: RouteSettings(name: LoginScreen.routeName),
+        screen: LoginScreen(),
+        withNavBar: true,
+        pageTransitionAnimation: PageTransitionAnimation.cupertino,
+      );
       setState(() {
         result = scanData;
       });

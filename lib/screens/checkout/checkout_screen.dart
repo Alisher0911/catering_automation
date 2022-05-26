@@ -16,7 +16,7 @@ class CheckoutScreen extends StatelessWidget {
         child: ElevatedButton(
           child: Text('Location Screen'),
           onPressed: () {
-            Navigator.pushNamed(context, "/location");
+            // Navigator.pushNamed(context, "/location");
           },
         ),
       ),

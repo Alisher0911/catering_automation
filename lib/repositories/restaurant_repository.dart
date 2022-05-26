@@ -2,7 +2,8 @@ import 'package:catering/models/booking_table_model.dart';
 import 'package:catering/models/restaurant_model.dart';
 import 'package:dio/dio.dart';
 
-const String _baseUrl = "http://10.0.2.2:3000/restaurants";
+// const String _baseUrl = "http://10.0.2.2:3000/restaurants";
+const String _baseUrl = "http://10.18.0.99:3000/restaurants";
 // const String _baseUrl = "http://localhost:3000/restaurants";
 
 class RestaurantRepository {
