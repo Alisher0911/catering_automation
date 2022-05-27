@@ -10,7 +10,7 @@ class FoodSearchBox extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(8.0),
+      padding: const EdgeInsets.all(16.0),
       child: Row(
         children: [
           Expanded(
@@ -36,33 +36,33 @@ class FoodSearchBox extends StatelessWidget {
             ),
           ),
 
-          SizedBox(width: 10),
+          // SizedBox(width: 10),
 
-          Container(
-            width: 50,
-            height: 50,
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(5),
+          // Container(
+          //   width: 50,
+          //   height: 50,
+          //   decoration: BoxDecoration(
+          //     color: Colors.white,
+          //     borderRadius: BorderRadius.circular(5),
 
-            ),
-            child: IconButton(
-                icon: Icon(Icons.menu),
-                color: Theme.of(context).colorScheme.primary,
-                splashColor: Colors.transparent,
-                highlightColor: Colors.transparent,
-                onPressed: () {
-                  // Navigator.pushNamed(context, '/filter');
-                  pushNewScreenWithRouteSettings(
-                    context,
-                    settings: RouteSettings(name: FilterScreen.routeName),
-                    screen: FilterScreen(),
-                    withNavBar: true,
-                    pageTransitionAnimation: PageTransitionAnimation.cupertino,
-                  );
-                },
-            ),
-          )
+          //   ),
+          //   child: IconButton(
+          //       icon: Icon(Icons.menu),
+          //       color: Theme.of(context).colorScheme.primary,
+          //       splashColor: Colors.transparent,
+          //       highlightColor: Colors.transparent,
+          //       onPressed: () {
+          //         // Navigator.pushNamed(context, '/filter');
+          //         pushNewScreenWithRouteSettings(
+          //           context,
+          //           settings: RouteSettings(name: FilterScreen.routeName),
+          //           screen: FilterScreen(),
+          //           withNavBar: true,
+          //           pageTransitionAnimation: PageTransitionAnimation.cupertino,
+          //         );
+          //       },
+          //   ),
+          // )
         ],
       ),
     );

@@ -7,4 +7,24 @@ abstract class PlaceState extends Equatable {
   List<Object> get props => [];
 }
 
-class PlaceInitial extends PlaceState {}
+class PlaceByAddressLoading extends PlaceState {}
+
+class PlaceByAddressLoaded extends PlaceState {
+  final Location location;
+
+    const PlaceByAddressLoaded({ required this.location });
+
+  @override
+  List<Object> get props => [location];
+}
+
+
+class MarkersInitial extends PlaceState {}
+
+class MarkersLoaded extends PlaceState {
+  final Set<Marker> mapMarkers;
+  const MarkersLoaded({required this.mapMarkers});
+}
+
+
+class PlaceError extends PlaceState {}

@@ -4,23 +4,37 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class RegistrationForm extends StatelessWidget {
+
+class RegistrationForm extends StatefulWidget {
   const RegistrationForm({
     Key? key,
-    required GlobalKey<FormState> formKey,
-    required this.emailController,
-    required this.passwordController,
-    required this.usernameController,
-    required this.confirmPasswordController,
-    required bool isHidden,
-  }) : _formKey = formKey, _isHidden = isHidden, super(key: key);
+  }) : super(key: key);
 
-  final GlobalKey<FormState> _formKey;
-  final TextEditingController usernameController;
-  final TextEditingController emailController;
-  final TextEditingController passwordController;
-  final TextEditingController confirmPasswordController;
-  final bool _isHidden;
+  @override
+  State<RegistrationForm> createState() => _RegistrationFormState();
+}
+
+
+class _RegistrationFormState extends State<RegistrationForm> {
+  final _formKey = GlobalKey<FormState>();
+  final emailController = TextEditingController();
+  final usernameController = TextEditingController();
+  final passwordController = TextEditingController();
+  final confirmPasswordController = TextEditingController();
+  bool _isHidden1 = true;
+  bool _isHidden2 = true;
+
+  void _togglePassword() {
+    setState(() {
+      _isHidden1 = !_isHidden1;
+    });
+  }
+
+  void _toggleConfirmPassword() {
+    setState(() {
+      _isHidden2 = !_isHidden2;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -121,7 +135,7 @@ class RegistrationForm extends StatelessWidget {
                 controller: passwordController,
                 style: inputText,
                 textAlignVertical: TextAlignVertical.center,
-                obscureText: _isHidden,
+                obscureText: _isHidden1,
                 decoration: InputDecoration(
                   border: OutlineInputBorder(
                     borderSide: BorderSide.none,
@@ -145,7 +159,7 @@ class RegistrationForm extends StatelessWidget {
                     child: InkWell(
                       // onTap: _togglePassword,
                       child: Icon(
-                        _isHidden ? Icons.visibility : Icons.visibility_off,
+                        _isHidden1 ? Icons.visibility : Icons.visibility_off,
                         color: Color(0xFF626262),
                         size: 25,
                       ),
@@ -170,7 +184,7 @@ class RegistrationForm extends StatelessWidget {
                 controller: confirmPasswordController,
                 style: inputText,
                 textAlignVertical: TextAlignVertical.center,
-                obscureText: _isHidden,
+                obscureText: _isHidden2,
                 decoration: InputDecoration(
                   border: OutlineInputBorder(
                     borderSide: BorderSide.none,
@@ -194,7 +208,7 @@ class RegistrationForm extends StatelessWidget {
                     child: InkWell(
                       // onTap: _togglePassword,
                       child: Icon(
-                        _isHidden ? Icons.visibility : Icons.visibility_off,
+                        _isHidden2 ? Icons.visibility : Icons.visibility_off,
                         color: Color(0xFF626262),
                         size: 25,
                       ),
@@ -225,12 +239,12 @@ class RegistrationForm extends StatelessWidget {
                       text: "* ",
                       style: TextStyle(color: Colors.red)
                     ),
-                    TextSpan(text: "By clicking the "),
+                    TextSpan(text: "Нажимая на кнопку "),
                     TextSpan(
-                      text: "Register ",
+                      text: "Регистрация",
                       style: TextStyle(color: appColor2),
                     ),
-                    TextSpan(text: "button, you agree to the public offer")
+                    TextSpan(text: ", вы соглашаетесь с публичной офертой")
                   ]
                 )
               ),

@@ -1,8 +1,10 @@
 import 'package:catering/bloc/category/category_bloc.dart';
+import 'package:catering/bloc/place/place_bloc.dart';
 import 'package:catering/bloc/restaurant/restaurant_bloc.dart';
 import 'package:catering/models/category_model.dart';
 import 'package:catering/models/promo_model.dart';
 import 'package:catering/repositories/category_repository.dart';
+import 'package:catering/repositories/geolocation/geolocation_repository.dart';
 import 'package:catering/screens/home/widgets/navigation_drawer.dart';
 import 'package:catering/widgets/category_box.dart';
 import 'package:catering/widgets/food_search_box.dart';
@@ -105,7 +107,7 @@ class HomeScreen extends StatelessWidget {
                   padding: const EdgeInsets.all(8.0),
                   child: Align(
                       alignment: Alignment.topLeft,
-                      child: Text("Top Rated",
+                      child: Text("Рестораны",
                           style: Theme.of(context).textTheme.headline3!.copyWith(fontStyle: FontStyle.italic, fontFamily: "Nunito", fontWeight: FontWeight.w700, color: Colors.white)))),
 
               BlocBuilder<RestaurantBloc, RestaurantState>(

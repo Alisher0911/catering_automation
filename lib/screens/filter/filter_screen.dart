@@ -1,10 +1,11 @@
 import 'package:catering/bloc/filter/filter_bloc.dart';
 import 'package:catering/models/restaurant_model.dart';
+import 'package:catering/screens/restaurant_listing/restaurant_listing_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 
 import 'widgets/custom_category_filter.dart';
-import 'widgets/custom_price_filter.dart';
 
 class FilterScreen extends StatelessWidget {
   static const String routeName = '/filter';
@@ -42,17 +43,23 @@ class FilterScreen extends StatelessWidget {
                           .map((filter) => filter.category.name)
                           .toList();
                       
-                      var prices = state.filter.priceFilters
-                          .where((filter) => filter.value)
-                          .map((filter) => filter.price.price)
-                          .toList();
+                      // var prices = state.filter.priceFilters
+                      //     .where((filter) => filter.value)
+                      //     .map((filter) => filter.price.price)
+                      //     .toList();
 
                       List<Restaurant> restaurants = Restaurant.restaurants
-                                        .where((restaurant) => categories.any((category) => restaurant.tags.contains(category)))
-                                        //.where((restaurant) => prices.any((price) => restaurant.priceCategory.contains(price)))
-                                        .toList();
-
-                      Navigator.pushNamed(context, '/restaurant-listing', arguments: restaurants);
+                                      .where((restaurant) => categories.any((category) => restaurant.tags.contains(category)))
+                                      //.where((restaurant) => prices.any((price) => restaurant.priceCategory.contains(price)))
+                                      .toList();
+                                        
+                      pushNewScreenWithRouteSettings(
+                        context,
+                        settings: RouteSettings(name: RestaurantListingScreen.routeName),
+                        screen: RestaurantListingScreen(restaurants: restaurants),
+                        withNavBar: true,
+                        pageTransitionAnimation: PageTransitionAnimation.cupertino,
+                      );
                     },
                   );
                 }
@@ -69,10 +76,10 @@ class FilterScreen extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text("Price",
-                  style: Theme.of(context).textTheme.headline4!.copyWith(
-                      color: Theme.of(context).colorScheme.primary)),
-              CustomPriceFilter(),
+              // Text("Price",
+              //     style: Theme.of(context).textTheme.headline4!.copyWith(
+              //         color: Theme.of(context).colorScheme.primary)),
+              // CustomPriceFilter(),
               Text("Category",
                   style: Theme.of(context).textTheme.headline4!.copyWith(
                       color: Theme.of(context).colorScheme.primary)),

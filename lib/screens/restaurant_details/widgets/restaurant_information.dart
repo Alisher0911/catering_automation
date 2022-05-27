@@ -1,3 +1,4 @@
+import 'package:catering/bloc/place/place_bloc.dart';
 import 'package:catering/bloc/restaurant/restaurant_bloc.dart';
 import 'package:catering/config/text_styles.dart';
 import 'package:catering/models/booking_table_model.dart';
@@ -94,7 +95,7 @@ void _showTables(context, Restaurant restaurant) {
       builder: (BuildContext bc) {
         return BlocProvider(
           create: (context) =>
-              RestaurantBloc(restaurantRepository: context.read<RestaurantRepository>())
+              RestaurantBloc(restaurantRepository: context.read<RestaurantRepository>(), placeBloc: context.read<PlaceBloc>())
                 ..add(LoadRestaurantTables(id: restaurant.id)),
           child: DraggableScrollableSheet(
             expand: false,

@@ -6,6 +6,7 @@ import 'package:catering/bloc/geolocation/geolocation_bloc.dart';
 import 'package:catering/bloc/login/login_bloc.dart';
 import 'package:catering/bloc/menu_item_quantity/menuitemquantity_cubit.dart';
 import 'package:catering/bloc/navbar_navigation/navbar_navigation_cubit.dart';
+import 'package:catering/bloc/place/place_bloc.dart';
 import 'package:catering/bloc/restaurant/restaurant_bloc.dart';
 import 'package:catering/bloc/userdata/userdata_bloc.dart';
 import 'package:catering/config/app_router.dart';
@@ -71,7 +72,8 @@ class MyApp extends StatelessWidget {
           BlocProvider(create: (context) => MenuItemQuantityCubit()),
           BlocProvider(create: (context) => FilterBloc()..add(FilterLoad())),
           BlocProvider(create: (context) => BasketBloc()..add(StartBasket())),
-          BlocProvider(create: (context) => RestaurantBloc(restaurantRepository: context.read<RestaurantRepository>())..add(LoadRestaurants())),
+          BlocProvider(create: (context) => PlaceBloc(geolocationRepository: context.read<GeolocationRepository>())),
+          BlocProvider(create: (context) => RestaurantBloc(restaurantRepository: context.read<RestaurantRepository>(), placeBloc: context.read<PlaceBloc>())..add(LoadRestaurants())),
           BlocProvider(create: (context) => AuthenticationBloc(userRepository: context.read<UserRepository>())..add(AppStarted())),
           // BlocProvider(create: (context) => CategoryBloc(categoryRepository: context.read<CategoryRepository>())),
           // BlocProvider(create: (context) => UserDataBloc(userRepository: context.read<UserRepository>(), authenticationBloc: BlocProvider.of<AuthenticationBloc>(context))),

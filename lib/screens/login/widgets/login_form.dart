@@ -19,7 +19,15 @@ class LoginForm extends StatefulWidget {
 class _LoginFormState extends State<LoginForm> {
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
-  final isHidden = false;
+  bool _isHidden = true;
+  bool _isRememberChecked = false;
+
+  void _togglePassword() {
+    setState(() {
+      _isHidden = !_isHidden;
+    });
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -61,7 +69,7 @@ class _LoginFormState extends State<LoginForm> {
                             ),
                             filled: true,
                             fillColor: Color(0xFF393939),
-                            hintText: 'Имя пользователя или E-mail',
+                            hintText: 'E-mail',
                             hintStyle: hintText,
                             contentPadding:
                                 EdgeInsets.symmetric(horizontal: 20, vertical: 25),
@@ -87,7 +95,7 @@ class _LoginFormState extends State<LoginForm> {
                           controller: passwordController,
                           style: inputText,
                           textAlignVertical: TextAlignVertical.center,
-                          obscureText: isHidden,
+                          obscureText: _isHidden,
                           decoration: InputDecoration(
                               border: OutlineInputBorder(
                                   borderSide: BorderSide.none,
@@ -109,9 +117,9 @@ class _LoginFormState extends State<LoginForm> {
                               suffixIcon: Padding(
                                 padding: const EdgeInsets.all(15.0),
                                 child: InkWell(
-                                  // onTap: _togglePassword,
+                                  onTap: _togglePassword,
                                   child: Icon(
-                                    isHidden ? Icons.visibility : Icons.visibility_off,
+                                    _isHidden ? Icons.visibility : Icons.visibility_off,
                                     color: Color(0xFF626262),
                                     size: 25,
                                   ),
@@ -142,8 +150,12 @@ class _LoginFormState extends State<LoginForm> {
                                     shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(5),
                                     ),
-                                    value: true,
-                                    onChanged: (bool? newValue) {},
+                                    value: _isRememberChecked,
+                                    onChanged: (bool? newValue) {
+                                      setState(() {
+                                        _isRememberChecked = newValue!;
+                                      });
+                                    },
                                   ),
                                 ),
                                 Text(

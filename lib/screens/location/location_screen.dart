@@ -1,6 +1,9 @@
 import 'dart:async';
 
 import 'package:catering/bloc/geolocation/geolocation_bloc.dart';
+import 'package:catering/bloc/place/place_bloc.dart';
+import 'package:catering/bloc/restaurant/restaurant_bloc.dart';
+import 'package:catering/models/restaurant_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -50,19 +53,24 @@ class LocationScreen extends StatelessWidget {
               if (state is GeolocationLoading) {
                 return Center(child: CircularProgressIndicator());
               } else if ( state is GeolocationLoaded) {
-                return GoogleMap(
-                  myLocationButtonEnabled: true,
-                  markers: {
-                    restMarker,
-                    restMarker1
+                return BlocBuilder<PlaceBloc, PlaceState>(
+                  builder: (context, placeState) {
+                    Set<Marker> markers = {};
+                    if (placeState is MarkersLoaded) {
+                      markers = placeState.mapMarkers;
+                    }
+                    return GoogleMap(
+                      myLocationButtonEnabled: true,
+                      markers: markers,
+                      initialCameraPosition: CameraPosition(
+                        target: LatLng(state.position.latitude, state.position.longitude),
+                        zoom: 18,
+                      ),
+                      onMapCreated: (GoogleMapController controller) {
+                        _controller.complete(controller);
+                      },
+                    );
                   },
-                  initialCameraPosition: CameraPosition(
-                    target: LatLng(state.position.latitude, state.position.longitude),
-                    zoom: 5,
-                  ),
-                  // onMapCreated: (GoogleMapController controller) {
-                  //   _controller.complete(controller);
-                  // },
                 );
               } else {
                 return Text("Something went wrong");
@@ -97,21 +105,49 @@ class LocationSearchBox extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(8.0),
-      child: TextField(
-        decoration: InputDecoration(
-          filled: true,
-          fillColor: Colors.white,
-          hintText: "Enter your location",
-          suffixIcon: Icon(Icons.search),
-          contentPadding: EdgeInsets.only(bottom: 5, top: 5, left: 20),
-          focusedBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(10),
-            borderSide: BorderSide(color: Colors.white)
-          ),
-          enabledBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(10),
-            borderSide: BorderSide(color: Colors.white)
-          ),
+      child: BlocBuilder<RestaurantBloc, RestaurantState>(
+        builder: (context, state) {
+          return state is RestaurantLoaded? 
+          Autocomplete<Restaurant>(
+            optionsBuilder: (TextEditingValue textEditingValue) {
+              if (textEditingValue.text == '') {
+                return const Iterable<Restaurant>.empty();
+              }
+              return state.restaurants.where((Restaurant restaurant) {
+                return restaurant.name.toLowerCase().contains(textEditingValue.text.toLowerCase());
+              });
+            },
+            displayStringForOption: (Restaurant option) => option.name,
+          )
+          : LocationSearchTextField();
+        },
+      ),
+    );
+  }
+}
+
+
+class LocationSearchTextField extends StatelessWidget {
+  const LocationSearchTextField({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return TextField(
+      decoration: InputDecoration(
+        filled: true,
+        fillColor: Colors.white,
+        hintText: "Enter your location",
+        suffixIcon: Icon(Icons.search),
+        contentPadding: EdgeInsets.only(bottom: 5, top: 5, left: 20),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10),
+          borderSide: BorderSide(color: Colors.white)
+        ),
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10),
+          borderSide: BorderSide(color: Colors.white)
         ),
       ),
     );

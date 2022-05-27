@@ -34,6 +34,7 @@ class UserDataBloc extends Bloc<UserDataEvent, UserDataState> {
         emit(UserDataError("No token"));
       }
     } catch(e) {
+      authenticationBloc.add(LoggedOut());
       emit(UserDataError(e.toString()));
     }
   }

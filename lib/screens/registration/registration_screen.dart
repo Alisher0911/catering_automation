@@ -111,7 +111,7 @@ class RegistrationScreen extends StatelessWidget {
                             userRepository: context.read<UserRepository>(),
                           );
                         },
-                        child: RegistrationForm(formKey: _registrationFormKey, emailController: emailController, passwordController: passwordController, isHidden: _isHidden, usernameController: usernameController, confirmPasswordController: confirmPasswordController),
+                        child: RegistrationForm(),
                       ),
                       
 

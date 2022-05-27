@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
+import 'package:catering/bloc/place/place_bloc.dart';
 import 'package:catering/models/booking_table_model.dart';
 import 'package:catering/models/restaurant_model.dart';
 import 'package:catering/repositories/restaurant_repository.dart';
@@ -11,10 +12,13 @@ part 'restaurant_state.dart';
 
 class RestaurantBloc extends Bloc<RestaurantEvent, RestaurantState> {
   final  RestaurantRepository _restaurantRepository;
+  final PlaceBloc placeBloc;
   StreamSubscription? _restaurantSubscription;
 
-  RestaurantBloc({required RestaurantRepository restaurantRepository}) 
-    : _restaurantRepository = restaurantRepository,
+  RestaurantBloc({
+    required RestaurantRepository restaurantRepository,
+    required this.placeBloc
+  }) : _restaurantRepository = restaurantRepository,
     super(RestaurantLoading()) {
       on<LoadRestaurants>(_onLoadRestaurants);
       on<LoadRestaurantTables>(_onLoadRestaurantTables);
@@ -27,6 +31,7 @@ class RestaurantBloc extends Bloc<RestaurantEvent, RestaurantState> {
     try {
       final restaurants = await _restaurantRepository.getRestaurants();
       emit(RestaurantLoaded(restaurants));
+      placeBloc.add(LoadMarkers(restaurants: restaurants));
     } catch(e) {
       emit(RestaurantError(e.toString()));
     }

@@ -1,9 +1,11 @@
 import 'dart:io';
 
+import 'package:catering/bloc/restaurant/restaurant_bloc.dart';
 import 'package:catering/config/text_styles.dart';
 import 'package:catering/screens/screens.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
 
@@ -108,16 +110,24 @@ class _QRScannerScreenState extends State<QRScannerScreen> {
     this.controller = controller;
     controller.scannedDataStream.listen((scanData) {
       this.controller!.pauseCamera();
-      pushNewScreenWithRouteSettings(
-        context,
-        settings: RouteSettings(name: LoginScreen.routeName),
-        screen: LoginScreen(),
-        withNavBar: true,
-        pageTransitionAnimation: PageTransitionAnimation.cupertino,
-      );
       setState(() {
         result = scanData;
       });
+      BlocListener<RestaurantBloc, RestaurantState>(
+        listener: (context, state) {
+          if (state is RestaurantLoaded) {
+            pushNewScreenWithRouteSettings(
+              context,
+              settings: RouteSettings(name: RestaurantDetailsScreen.routeName),
+              screen: RestaurantDetailsScreen(restaurant: state.restaurants.firstWhere((restaurant) => restaurant.id.toString() == result!.code)),
+              withNavBar: true,
+              pageTransitionAnimation: PageTransitionAnimation.cupertino,
+            );
+          } else {
+            print("not loaded");
+          }
+        },
+      );
     });
   }
 

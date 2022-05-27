@@ -61,7 +61,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                     child: Align(
                       alignment: Alignment.topRight,
                       child: OnboardNavBtn(
-                        name: "SKIP >>",
+                        name: "Пропустить >>",
                         onPressed: () {
                           Navigator.pushNamed(context, "/login");
                         }
@@ -107,7 +107,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                           Navigator.pushNamed(context, "/login");
                         },
                         child: Text(
-                          "Get Started!",
+                          "Начать!",
                           style: TextStyle(color: KPrimaryColor, fontWeight: FontWeight.bold, fontSize: 17),
                         ),
                         style: TextButton.styleFrom(
