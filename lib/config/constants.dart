@@ -1,2 +1,3 @@
 
-const String baseUrl = "http://10.18.2.136:8080";
+const String baseUrl = "https://foodnationapi.herokuapp.com";
+const String jsonUrl = "http://192.168.1.3:3000";

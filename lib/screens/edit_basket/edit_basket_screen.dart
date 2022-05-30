@@ -62,7 +62,7 @@ class EditBasketScreen extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text('Items',
+              Text('Продукты',
                   style: Theme.of(context).textTheme.headline4!.copyWith(color: Colors.white)
               ),
               BlocBuilder<BasketBloc, BasketState>(
@@ -83,7 +83,7 @@ class EditBasketScreen extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
-                            "No items in the Basket",
+                            "Нет продуктов",
                             textAlign: TextAlign.left,
                             style: Theme.of(context).textTheme.headline6,
                           )

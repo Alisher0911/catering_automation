@@ -45,7 +45,7 @@ class _LoginFormState extends State<LoginForm> {
             if (state is LoginFailure) {
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(
-                  content: Text("Login failed."),
+                  content: Text("Не удалось войти."),
                   backgroundColor: Colors.red,
                 ),
               );

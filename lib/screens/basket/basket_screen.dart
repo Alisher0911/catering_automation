@@ -235,7 +235,7 @@ class BasketScreen extends StatelessWidget {
                                     );
                                   },
                                   child: Text(
-                                    "Change",
+                                    "Поменять",
                                     style: Theme.of(context)
                                         .textTheme
                                         .headline6!
@@ -298,7 +298,7 @@ class BasketScreen extends StatelessWidget {
                                           );
                                         },
                                         child: Text(
-                                          "Apply",
+                                          "Применить",
                                           style: Theme.of(context)
                                               .textTheme
                                               .headline6!
