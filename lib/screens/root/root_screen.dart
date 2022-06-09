@@ -26,7 +26,7 @@ class RootScreen extends StatelessWidget {
         } else if (state is AuthenticationLoading) {
           return Scaffold(
             backgroundColor: Theme.of(context).colorScheme.background,
-            body: Container(
+            body: SizedBox(
               width: MediaQuery.of(context).size.width,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,

@@ -2,19 +2,20 @@ import 'package:catering/bloc/place/place_bloc.dart';
 import 'package:catering/bloc/restaurant/restaurant_bloc.dart';
 import 'package:catering/config/text_styles.dart';
 import 'package:catering/models/booking_table_model.dart';
-import 'package:catering/models/restaurant_model.dart';
+import 'package:catering/models/local_organization.dart';
 import 'package:catering/repositories/restaurant_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
-class RestaurantInformation extends StatelessWidget {
-  const RestaurantInformation({
-    Key? key,
-    required this.restaurant,
-  }) : super(key: key);
+class LocalOrganizationInformation extends StatelessWidget {
+  final LocalOrganization localOrganization;
 
-  final Restaurant restaurant;
+  const LocalOrganizationInformation({
+    Key? key,
+    required this.localOrganization,
+  }) : super(key: key);
+  
 
   @override
   Widget build(BuildContext context) {
@@ -25,19 +26,25 @@ class RestaurantInformation extends StatelessWidget {
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            RatingBarIndicator(
-              rating: 2.75,
-              itemBuilder: (context, index) => Icon(
+            RatingBar.builder(
+              updateOnDrag: true,
+              initialRating: localOrganization.rate,
+              direction: Axis.horizontal,
+              itemCount: 5,
+              itemSize: 25,
+              itemBuilder: (context, _) => Icon(
                 Icons.star_rate_rounded,
                 color: Color(0xFF45BFE4),
               ),
-              itemCount: 5,
-              itemSize: 25.0,
-              direction: Axis.horizontal,
+              onRatingUpdate: (rating) {
+                print(rating);
+              },
             ),
+            
             SizedBox(height: 5),
+
             Text(
-              restaurant.name,
+              localOrganization.name,
               style: Theme.of(context)
                   .textTheme
                   .headline6!
@@ -45,7 +52,7 @@ class RestaurantInformation extends StatelessWidget {
             ),
             SizedBox(height: 5),
             Text(
-              restaurant.address,
+              localOrganization.address,
               style: Theme.of(context).textTheme.headline4!.copyWith(
                   color: Colors.white.withOpacity(0.6),
                   fontWeight: FontWeight.normal),
@@ -56,7 +63,7 @@ class RestaurantInformation extends StatelessWidget {
           splashColor: Colors.transparent,
           highlightColor: Colors.transparent,
           onTap: () {
-            _showTables(context, restaurant);
+            _showTables(context, localOrganization);
           },
           child: Container(
             padding: EdgeInsets.symmetric(horizontal: 10, vertical: 7.5),
@@ -81,7 +88,7 @@ class RestaurantInformation extends StatelessWidget {
   }
 }
 
-void _showTables(context, Restaurant restaurant) {
+void _showTables(context, LocalOrganization localOrganization) {
   showModalBottomSheet(
       useRootNavigator: true,
       isScrollControlled: true,
@@ -96,7 +103,7 @@ void _showTables(context, Restaurant restaurant) {
         return BlocProvider(
           create: (context) =>
               RestaurantBloc(restaurantRepository: context.read<RestaurantRepository>(), placeBloc: context.read<PlaceBloc>())
-                ..add(LoadRestaurantTables(id: restaurant.id)),
+                ..add(LoadRestaurantTables(id: localOrganization.id)),
           child: DraggableScrollableSheet(
             expand: false,
             initialChildSize: 0.7,
@@ -175,8 +182,7 @@ Widget _buildTables(BuildContext context, BookingTable table) {
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(15),
             image: DecorationImage(
-                image: NetworkImage(
-                    table.imageUrl),
+                image: NetworkImage(table.imageUrl),
                 fit: BoxFit.cover)),
       ),
       trailing: SizedBox(

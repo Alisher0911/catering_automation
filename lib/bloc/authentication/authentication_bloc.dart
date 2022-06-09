@@ -1,4 +1,5 @@
 import 'package:bloc/bloc.dart';
+import 'package:catering/bloc/basket/basket_bloc.dart';
 import 'package:catering/repositories/user_repository.dart';
 import 'package:equatable/equatable.dart';
 
@@ -7,9 +8,11 @@ part 'authentication_state.dart';
 
 class AuthenticationBloc extends Bloc<AuthenticationEvent, AuthenticationState> {
   final UserRepository userRepository;
+  final BasketBloc basketBloc;
 
   AuthenticationBloc({
-    required this.userRepository
+    required this.userRepository,
+    required this.basketBloc
   }) : super(AuthenticationUninitialized()) {
         on<AppStarted>(_onAppStarted);
         on<LoggedIn>(_onLoggedIn);
@@ -35,6 +38,7 @@ class AuthenticationBloc extends Bloc<AuthenticationEvent, AuthenticationState> 
   void _onLoggedOut(LoggedOut event, Emitter<AuthenticationState> emit) async {
     emit(AuthenticationLoading());
     await userRepository.deleteToken();
+    basketBloc.add(ClearBasket());
     emit(AuthenticationUnauthenticated());
   }
 }

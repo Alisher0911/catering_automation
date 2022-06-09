@@ -14,6 +14,7 @@ class BasketBloc extends Bloc<BasketEvent, BasketState> {
     on<AddItem>(_onAddItem);
     on<RemoveItem>(_onRemoveItem);
     on<RemoveAllItem>(_onRemoveAllItem);
+    on<ClearBasket>(_onClearBasket);
     // on<ToggleSwitch>(_onToggleSwitch);
     on<AddVoucher>(_onAddVoucher);
     on<SelectDeliveryTime>(_onSelectDeliveryTime);
@@ -53,6 +54,15 @@ class BasketBloc extends Bloc<BasketEvent, BasketState> {
     if (state is BasketLoaded) {
       try {
         emit(BasketLoaded(basket: state.basket.copyWith(items: List.from(state.basket.items)..removeWhere((item) => item == event.item))));
+      } catch (_) {}
+    }
+  }
+
+  void _onClearBasket(ClearBasket event, Emitter<BasketState> emit) {
+    final state = this.state;
+    if (state is BasketLoaded) {
+      try {
+        emit(BasketLoaded(basket: Basket()));
       } catch (_) {}
     }
   }

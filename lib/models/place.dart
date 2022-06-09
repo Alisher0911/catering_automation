@@ -1,21 +1,12 @@
+import 'package:catering/models/local_organization.dart';
+import 'package:geocoding/geocoding.dart';
+
 class Place {
-  final String placeId;
-  final String name;
-  final double lat;
-  final double lon;
+  final LocalOrganization localOrganization;
+  final Location location;
 
   Place({
-    this.placeId = '',
-    this.name = '',
-    required this.lat,
-    required this.lon,
+    required this.localOrganization,
+    required this.location
   });
-
-  factory Place.fromJson(Map<String, dynamic> json) {
-    return Place(
-        placeId: json['place_id'],
-        name: json['formatted_address'],
-        lat: json['geometry']['location']['lat'],
-        lon: json['geometry']['location']['lng']);
-  }
 }

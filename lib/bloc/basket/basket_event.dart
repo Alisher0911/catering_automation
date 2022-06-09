@@ -14,7 +14,7 @@ class StartBasket extends BasketEvent {
 
 
 class AddItem extends BasketEvent {
-  final MenuItem item;
+  final FoodMenuItem item;
 
   const AddItem(this.item);
 
@@ -24,7 +24,7 @@ class AddItem extends BasketEvent {
 
 
 class RemoveItem extends BasketEvent {
-  final MenuItem item;
+  final FoodMenuItem item;
 
   const RemoveItem(this.item);
 
@@ -34,12 +34,18 @@ class RemoveItem extends BasketEvent {
 
 
 class RemoveAllItem extends BasketEvent {
-  final MenuItem item;
+  final FoodMenuItem item;
 
   const RemoveAllItem(this.item);
 
   @override
   List<Object> get props => [item];
+}
+
+
+class ClearBasket extends BasketEvent {
+  @override
+  List<Object> get props => [];
 }
 
 

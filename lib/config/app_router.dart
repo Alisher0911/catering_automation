@@ -30,14 +30,14 @@ class AppRouter {
         return DeliveryTimeScreen.route();
       case FilterScreen.routeName:
         return FilterScreen.route();
-      case RestaurantDetailsScreen.routeName:
-        return RestaurantDetailsScreen.route(
-          restaurant: settings.arguments as Restaurant
-        );
-      case RestaurantListingScreen.routeName:
-        return RestaurantListingScreen.route(
-          restaurants: settings.arguments as List<Restaurant>
-        );
+      // case RestaurantDetailsScreen.routeName:
+      //   return RestaurantDetailsScreen.route(
+      //     restaurant: settings.arguments as Restaurant
+      //   );
+      // case RestaurantListingScreen.routeName:
+      //   return RestaurantListingScreen.route(
+      //     restaurants: settings.arguments as List<Restaurant>
+      //   );
       case VoucherScreen.routeName:
         return VoucherScreen.route();
       default:

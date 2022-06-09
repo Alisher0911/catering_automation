@@ -1,11 +1,9 @@
+import 'package:catering/models/local_organization.dart';
 import 'package:catering/models/place.dart';
-import 'package:catering/models/restaurant_model.dart';
 import 'package:catering/repositories/geolocation/base_geolocation_repository.dart';
-import 'package:dio/dio.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'dart:convert' as convert;
 
 class GeolocationRepository extends BaseGeolocationRepository {
   GeolocationRepository();
@@ -43,7 +41,7 @@ class GeolocationRepository extends BaseGeolocationRepository {
   }
 
   @override
-  Future<Set<Marker>> getMarkersOfRestaurants(List<Restaurant> restaurants) async {
+  Future<Set<Marker>> getMarkersOfOrganizations(List<LocalOrganization> localOrganizations) async {
     Set<Marker> markers = {};
     Position position = await getCurrentLocation();
     markers.add(
@@ -54,19 +52,35 @@ class GeolocationRepository extends BaseGeolocationRepository {
         position: LatLng(position.latitude, position.longitude),
       )
     );
-    for (Restaurant restaurant in restaurants) {
-      Location location = await getLocationByAddress(restaurant.address);
-      markers.add(
-        Marker(
-          markerId: MarkerId("${restaurant.id}"),
-          infoWindow: InfoWindow(title: restaurant.name),
-          icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueOrange),
-          position: LatLng(location.latitude, location.longitude),
-          onTap: () {
-          }
-        )
-      );
+    for (LocalOrganization localOrganization in localOrganizations) {
+      try {
+        Location location = await getLocationByAddress(localOrganization.address);
+        markers.add(
+          Marker(
+            markerId: MarkerId("${localOrganization.id}"),
+            infoWindow: InfoWindow(title: localOrganization.name),
+            icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueOrange),
+            position: LatLng(location.latitude, location.longitude),
+            onTap: () {
+            }
+          )
+        );
+      } catch (_) {}
     }
     return markers;
+  }
+
+
+  Future<List<Place>> getLocationsOfOrganizations(List<LocalOrganization> localOrganizations) async {
+    List<Place> places = [];
+    for (LocalOrganization localOrganization in localOrganizations) {
+      try {
+        Location location = await getLocationByAddress(localOrganization.address);
+        Place place = Place(localOrganization: localOrganization, location: location);
+        print("${place.localOrganization} ${place.location}");
+        places.add(place);
+      } catch (_) {}
+    }
+    return places;
   }
 }

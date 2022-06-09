@@ -1,8 +1,11 @@
 import 'package:badges/badges.dart';
 import 'package:catering/bloc/authentication/authentication_bloc.dart';
 import 'package:catering/bloc/basket/basket_bloc.dart';
+import 'package:catering/bloc/place/place_bloc.dart';
+import 'package:catering/bloc/restaurant/restaurant_bloc.dart';
 import 'package:catering/bloc/userdata/userdata_bloc.dart';
 import 'package:catering/config/text_styles.dart';
+import 'package:catering/repositories/restaurant_repository.dart';
 import 'package:catering/repositories/user_repository.dart';
 import 'package:catering/screens/screens.dart';
 import 'package:flutter/cupertino.dart';
@@ -88,8 +91,10 @@ class MainScreen extends StatelessWidget {
       ];
     }
 
-    return BlocProvider(
-      create: (context) => UserDataBloc(userRepository: context.read<UserRepository>(), authenticationBloc: context.read<AuthenticationBloc>())..add(LoadUserData(), ),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(create: (context) => UserDataBloc(userRepository: context.read<UserRepository>(), authenticationBloc: context.read<AuthenticationBloc>(), basketBloc: context.read<BasketBloc>())..add(LoadUserData()))
+      ],
       child: BlocListener<UserDataBloc, UserDataState>(
         listenWhen: (context, state) {
           return state is UserDataError;

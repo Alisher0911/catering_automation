@@ -21,7 +21,7 @@ class Category extends Equatable {
   factory Category.fromJson(Map<String, dynamic> json) => Category(
     id: json["id"], 
     name: json["name"] ?? "", 
-    urlImage: json["urlImage"] ?? "https://cdn-icons-png.flaticon.com/512/3132/3132693.png",
+    urlImage: json["urlImage"] ?? "https://flyclipart.com/thumb2/western-style-food-png-icon-free-download-775501.png",
   );
 
   Map<String, dynamic> toJson() => {

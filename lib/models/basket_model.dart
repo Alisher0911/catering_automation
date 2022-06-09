@@ -4,20 +4,20 @@ import 'package:catering/models/voucher_model.dart';
 import 'package:equatable/equatable.dart';
 
 class Basket extends Equatable {
-  final List<MenuItem> items;
+  final List<FoodMenuItem> items;
   final bool cutlery;
   final Voucher? voucher;
   final DeliveryTime? deliveryTime;
 
   Basket({
-    this.items = const <MenuItem>[],
+    this.items = const <FoodMenuItem>[],
     this.cutlery = false,
     this.voucher,
     this.deliveryTime
   });
 
   Basket copyWith({
-    List<MenuItem>? items,
+    List<FoodMenuItem>? items,
     bool? cutlery,
     Voucher? voucher,
     DeliveryTime? deliveryTime
@@ -53,7 +53,7 @@ class Basket extends Equatable {
   String get numberOfItmems => items.length.toString();
 
   double total(subtotal) {
-    return (voucher == null) ? subtotal + 5 : subtotal + 5 - voucher!.value;
+    return (voucher == null) ? subtotal + 500 : subtotal + 500 - voucher!.value;
   }
 
   String get subtotalString => subtotal.toStringAsFixed(2);

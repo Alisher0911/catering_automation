@@ -2,8 +2,9 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:catering/bloc/place/place_bloc.dart';
+import 'package:catering/config/secure_storage.dart';
 import 'package:catering/models/booking_table_model.dart';
-import 'package:catering/models/restaurant_model.dart';
+import 'package:catering/models/global_organization.dart';
 import 'package:catering/repositories/restaurant_repository.dart';
 import 'package:equatable/equatable.dart';
 
@@ -14,28 +15,34 @@ class RestaurantBloc extends Bloc<RestaurantEvent, RestaurantState> {
   final  RestaurantRepository _restaurantRepository;
   final PlaceBloc placeBloc;
   StreamSubscription? _restaurantSubscription;
+  final storage = SecureStorageService.getInstance;
 
   RestaurantBloc({
     required RestaurantRepository restaurantRepository,
     required this.placeBloc
   }) : _restaurantRepository = restaurantRepository,
-    super(RestaurantLoading()) {
-      on<LoadRestaurants>(_onLoadRestaurants);
+    super(GlobalOrganizationLoading()) {
       on<LoadRestaurantTables>(_onLoadRestaurantTables);
+      on<LoadGlobalOrganizations>(_onLoadGlobalOrganizations);
     }
 
 
-  void _onLoadRestaurants(LoadRestaurants event, Emitter<RestaurantState> emit) async {
+  void _onLoadGlobalOrganizations(LoadGlobalOrganizations event, Emitter<RestaurantState> emit) async {
     _restaurantSubscription?.cancel();
-    emit(RestaurantLoading());
+    emit(GlobalOrganizationLoading());
     try {
-      final restaurants = await _restaurantRepository.getRestaurants();
-      emit(RestaurantLoaded(restaurants));
-      placeBloc.add(LoadMarkers(restaurants: restaurants));
+      bool isSignedIn = await storage.containsKey(key: "token");
+      if (isSignedIn) {
+        final globalOrganizations = await _restaurantRepository.getGlobalOrganizations();
+        emit(GlobalOrganizationLoaded(globalOrganizations));
+      } else {
+        emit(GlobalOrganizationError("No token"));
+      }
     } catch(e) {
-      emit(RestaurantError(e.toString()));
+      emit(GlobalOrganizationError(e.toString()));
     }
   }
+
 
   void _onLoadRestaurantTables(LoadRestaurantTables event, Emitter<RestaurantState> emit) async {
     _restaurantSubscription?.cancel();
@@ -44,7 +51,7 @@ class RestaurantBloc extends Bloc<RestaurantEvent, RestaurantState> {
       final tables = await _restaurantRepository.getRestaurantTables(event.id);
       emit(RestaurantTablesLoaded(tables));
     } catch(e) {
-      emit(RestaurantError(e.toString()));
+      emit(RestaurantTablesError(e.toString()));
     }
   }
 

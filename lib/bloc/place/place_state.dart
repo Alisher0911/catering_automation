@@ -28,3 +28,12 @@ class MarkersLoaded extends PlaceState {
 
 
 class PlaceError extends PlaceState {}
+
+
+
+class OrgMarkersInitial extends PlaceState {}
+
+class OrgMarkersLoaded extends PlaceState {
+  final List<Place> places;
+  const OrgMarkersLoaded({required this.places});
+}

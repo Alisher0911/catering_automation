@@ -114,7 +114,7 @@ class EditBasketScreen extends StatelessWidget {
                               SizedBox(width: 20),
                               Expanded(
                                 child: Text(
-                                  "${state.basket.itemQuantity(state.basket.items).keys.elementAt(index).name}",
+                                  "${state.basket.itemQuantity(state.basket.items).keys.elementAt(index).title}",
                                   style: Theme.of(context).textTheme.headline6,
                                 ),
                               ),

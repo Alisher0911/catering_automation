@@ -1,5 +1,4 @@
 import 'package:catering/bloc/authentication/authentication_bloc.dart';
-import 'package:catering/bloc/category/category_bloc.dart';
 import 'package:catering/bloc/login/login_bloc.dart';
 import 'package:catering/config/text_styles.dart';
 import 'package:catering/repositories/user_repository.dart';

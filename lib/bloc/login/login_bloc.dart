@@ -9,12 +9,10 @@ part 'login_state.dart';
 class LoginBloc extends Bloc<LoginEvent, LoginState> {
   final UserRepository userRepository;
   final AuthenticationBloc authenticationBloc;
-  // final CategoryBloc categoryBloc;
 
   LoginBloc({
     required this.userRepository,
     required this.authenticationBloc,
-    // required this.categoryBloc
   }) : super(LoginInitial()) {
         on<LoginButtonPressed>(_onLoginButtonPressed);
       }
@@ -28,7 +26,6 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
         event.password,
       );
       authenticationBloc.add(LoggedIn(token: token));
-      // categoryBloc.add(LoadCategories(token: token));
       emit(LoginInitial());
     } catch (error) {
       emit(LoginFailure(error: error.toString()));

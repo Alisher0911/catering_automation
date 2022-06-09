@@ -18,10 +18,18 @@ class LoadPlaceByAddress extends PlaceEvent {
 }
 
 class LoadMarkers extends PlaceEvent {
-  final List<Restaurant> restaurants;
+  final List<LocalOrganization> localOrganizations;
 
-  const LoadMarkers({required this.restaurants});
+  const LoadMarkers({required this.localOrganizations});
 
   @override
-  List<Object> get props => [restaurants];
+  List<Object> get props => [localOrganizations];
+}
+
+
+class LoadOrgMarkers extends PlaceEvent {
+  final List<LocalOrganization> localOrganizations;
+  const LoadOrgMarkers({required this.localOrganizations});
+  @override
+  List<Object> get props => [localOrganizations];
 }

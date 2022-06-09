@@ -1,6 +1,5 @@
 import 'package:catering/bloc/filter/filter_bloc.dart';
 import 'package:catering/models/restaurant_model.dart';
-import 'package:catering/screens/restaurant_listing/restaurant_listing_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
@@ -48,18 +47,18 @@ class FilterScreen extends StatelessWidget {
                       //     .map((filter) => filter.price.price)
                       //     .toList();
 
-                      List<Restaurant> restaurants = Restaurant.restaurants
-                                      .where((restaurant) => categories.any((category) => restaurant.tags.contains(category)))
-                                      //.where((restaurant) => prices.any((price) => restaurant.priceCategory.contains(price)))
-                                      .toList();
+                      // List<Restaurant> restaurants = Restaurant.restaurants
+                      //                 .where((restaurant) => categories.any((category) => restaurant.tags.contains(category)))
+                      //                 //.where((restaurant) => prices.any((price) => restaurant.priceCategory.contains(price)))
+                      //                 .toList();
                                         
-                      pushNewScreenWithRouteSettings(
-                        context,
-                        settings: RouteSettings(name: RestaurantListingScreen.routeName),
-                        screen: RestaurantListingScreen(restaurants: restaurants),
-                        withNavBar: true,
-                        pageTransitionAnimation: PageTransitionAnimation.cupertino,
-                      );
+                      // pushNewScreenWithRouteSettings(
+                      //   context,
+                      //   settings: RouteSettings(name: RestaurantListingScreen.routeName),
+                      //   screen: RestaurantListingScreen(restaurants: restaurants),
+                      //   withNavBar: true,
+                      //   pageTransitionAnimation: PageTransitionAnimation.cupertino,
+                      // );
                     },
                   );
                 }

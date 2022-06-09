@@ -5,7 +5,7 @@ import 'package:dio/dio.dart';
 
 class UserRepository {
 
-  final Dio _dio = Dio();
+  final _dio = Dio();
   final storage = SecureStorageService.getInstance;
 
 
@@ -58,7 +58,7 @@ class UserRepository {
         }
       );
       final response = await _dio.get(userUrl, options: dioOptions);
-        if (response.statusCode == 200) {
+      if (response.statusCode == 200) {
         return UserData.fromJson(response.data);
       } else {
         throw Exception("Failed to load user");

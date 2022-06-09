@@ -8,7 +8,7 @@ abstract class RestaurantEvent extends Equatable {
 }
 
 
-class LoadRestaurants extends RestaurantEvent {
+class LoadGlobalOrganizations extends RestaurantEvent {
   @override
   List<Object> get props => [];
 }

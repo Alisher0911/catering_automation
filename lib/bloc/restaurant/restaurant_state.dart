@@ -5,28 +5,30 @@ abstract class RestaurantState extends Equatable {
 }
 
 
-class RestaurantLoading extends RestaurantState {
+
+class GlobalOrganizationLoading extends RestaurantState {
   @override
   List<Object> get props => [];
 }
 
-class RestaurantLoaded extends RestaurantState {
-  final List<Restaurant> restaurants;
+class GlobalOrganizationLoaded extends RestaurantState {
+  final List<GlobalOrganization> globalOrganizations;
 
-  const RestaurantLoaded(this.restaurants);
+  const GlobalOrganizationLoaded(this.globalOrganizations);
 
   @override
-  List<Object> get props => [restaurants];
+  List<Object> get props => [globalOrganizations];
 }
 
-class RestaurantError extends RestaurantState {
+class GlobalOrganizationError extends RestaurantState {
   final String error;
 
-  const RestaurantError(this.error);
+  const GlobalOrganizationError(this.error);
 
   @override
   List<Object?> get props => [error];
 }
+
 
 
 

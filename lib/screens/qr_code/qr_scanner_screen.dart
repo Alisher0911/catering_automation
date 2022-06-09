@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:catering/bloc/restaurant/restaurant_bloc.dart';
 import 'package:catering/config/text_styles.dart';
+import 'package:catering/screens/local_organization_details/local_organization_details.dart';
 import 'package:catering/screens/screens.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -90,16 +91,16 @@ class _QRScannerScreenState extends State<QRScannerScreen> {
               onQRViewCreated: _onQRViewCreated,
             ),
           ),
-          Expanded(
-            flex: 1,
-            child: Center(
-              child: (result != null)
-                  ? Text(
-                      'Barcode Type: ${describeEnum(result!.format)}   Data: ${result!.code}'
-                    )
-                  : Text('Scan a code'),
-            ),
-          )
+          // Expanded(
+          //   flex: 1,
+          //   child: Center(
+          //     child: (result != null)
+          //         ? Text(
+          //             'Barcode Type: ${describeEnum(result!.format)}   Data: ${result!.code}'
+          //           )
+          //         : Text('Scan a code'),
+          //   ),
+          // )
         ],
       ),
     );
@@ -113,21 +114,29 @@ class _QRScannerScreenState extends State<QRScannerScreen> {
       setState(() {
         result = scanData;
       });
-      BlocListener<RestaurantBloc, RestaurantState>(
-        listener: (context, state) {
-          if (state is RestaurantLoaded) {
-            pushNewScreenWithRouteSettings(
-              context,
-              settings: RouteSettings(name: RestaurantDetailsScreen.routeName),
-              screen: RestaurantDetailsScreen(restaurant: state.restaurants.firstWhere((restaurant) => restaurant.id.toString() == result!.code)),
-              withNavBar: true,
-              pageTransitionAnimation: PageTransitionAnimation.cupertino,
-            );
-          } else {
-            print("not loaded");
-          }
-        },
+      final id = int.parse(result!.code!);
+      pushNewScreenWithRouteSettings(
+        context,
+        settings: RouteSettings(name: LocalOrganizationDetailsScreen.routeName),
+        screen: LocalOrganizationDetailsScreen(id: id),
+        withNavBar: true,
+        pageTransitionAnimation: PageTransitionAnimation.cupertino,
       );
+      // BlocListener<RestaurantBloc, RestaurantState>(
+      //   listener: (context, state) {
+      //     if (state is RestaurantLoaded) {
+      //       pushNewScreenWithRouteSettings(
+      //         context,
+      //         settings: RouteSettings(name: RestaurantDetailsScreen.routeName),
+      //         screen: RestaurantDetailsScreen(restaurant: state.restaurants.firstWhere((restaurant) => restaurant.id.toString() == result!.code)),
+      //         withNavBar: true,
+      //         pageTransitionAnimation: PageTransitionAnimation.cupertino,
+      //       );
+      //     } else {
+      //       print("not loaded");
+      //     }
+      //   },
+      // );
     });
   }
 

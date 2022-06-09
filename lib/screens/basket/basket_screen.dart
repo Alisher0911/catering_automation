@@ -121,78 +121,69 @@ class BasketScreen extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text('Продукты',
-                    style: Theme.of(context).textTheme.headline3!.copyWith(
-                        color: Colors.white)),
+                  style: Theme.of(context).textTheme.headline3!.copyWith(color: Colors.white)
+                ),
                 BlocBuilder<BasketBloc, BasketState>(
                   builder: (context, state) {
                     if (state is BasketLoading) {
                       return Center(child: CircularProgressIndicator());
                     } else if (state is BasketLoaded) {
                       return state.basket.items.isEmpty
-                          ? Container(
+                      ? Container(
+                          width: double.infinity,
+                          margin: EdgeInsets.only(top: 5),
+                          padding: EdgeInsets.symmetric(
+                              horizontal: 30, vertical: 10),
+                          decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(5)),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                "Нет продуктов",
+                                textAlign: TextAlign.left,
+                                style: Theme.of(context).textTheme.headline6,
+                              )
+                            ],
+                          ),
+                        )
+                      : ListView.builder(
+                          shrinkWrap: true,
+                          itemCount: state.basket.itemQuantity(state.basket.items).keys.length,
+                          itemBuilder: (context, index) {
+                            return Container(
                               width: double.infinity,
                               margin: EdgeInsets.only(top: 5),
                               padding: EdgeInsets.symmetric(
-                                  horizontal: 30, vertical: 10),
+                                horizontal: 30, vertical: 10
+                              ),
                               decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius: BorderRadius.circular(5)),
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(5),
+                              ),
                               child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
                                 children: [
                                   Text(
-                                    "Нет продуктов",
-                                    textAlign: TextAlign.left,
-                                    style:
-                                        Theme.of(context).textTheme.headline6,
-                                  )
+                                    "${state.basket.itemQuantity(state.basket.items).entries.elementAt(index).value}x",
+                                    style: Theme.of(context).textTheme.headline6!.copyWith(color: Theme.of(context).colorScheme.primary),
+                                  ),
+                                  SizedBox(width: 20),
+                                  Expanded(
+                                    child: Text(
+                                      "${state.basket.itemQuantity(state.basket.items).keys.elementAt(index).title}",
+                                      style: Theme.of(context).textTheme.headline6,
+                                    ),
+                                  ),
+                                  Text(
+                                    "${state.basket.itemQuantity(state.basket.items).keys.elementAt(index).price.toStringAsFixed(2)} тг",
+                                    style: Theme.of(context).textTheme.headline6,
+                                  ),
                                 ],
                               ),
-                            )
-                          : ListView.builder(
-                              shrinkWrap: true,
-                              itemCount: state.basket
-                                  .itemQuantity(state.basket.items)
-                                  .keys
-                                  .length,
-                              itemBuilder: (context, index) {
-                                return Container(
-                                  width: double.infinity,
-                                  margin: EdgeInsets.only(top: 5),
-                                  padding: EdgeInsets.symmetric(
-                                      horizontal: 30, vertical: 10),
-                                  decoration: BoxDecoration(
-                                    color: Colors.white,
-                                    borderRadius: BorderRadius.circular(5),
-                                  ),
-                                  child: Row(
-                                    children: [
-                                      Text(
-                                        "${state.basket.itemQuantity(state.basket.items).entries.elementAt(index).value}x",
-                                        style: Theme.of(context).textTheme.headline6!.copyWith(
-                                                color: Theme.of(context).colorScheme.primary
-                                              ),
-                                      ),
-                                      SizedBox(width: 20),
-                                      Expanded(
-                                        child: Text(
-                                          "${state.basket.itemQuantity(state.basket.items).keys.elementAt(index).name}",
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .headline6,
-                                        ),
-                                      ),
-                                      Text(
-                                        "\$${state.basket.itemQuantity(state.basket.items).keys.elementAt(index).price}",
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .headline6,
-                                      ),
-                                    ],
-                                  ),
-                                );
-                              });
+                            );
+                          }
+                        );
                     } else {
                       return Text("Something went wrong.");
                     }
@@ -225,7 +216,6 @@ class BasketScreen extends StatelessWidget {
                                 ),
                                 TextButton(
                                   onPressed: () {
-                                    // Navigator.pushNamed(context, "/delivery-time");
                                     pushNewScreenWithRouteSettings(
                                       context,
                                       settings: RouteSettings(name: DeliveryTimeScreen.routeName),
@@ -236,13 +226,7 @@ class BasketScreen extends StatelessWidget {
                                   },
                                   child: Text(
                                     "Поменять",
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .headline6!
-                                        .copyWith(
-                                            color: Theme.of(context)
-                                                .colorScheme
-                                                .primary),
+                                    style: Theme.of(context).textTheme.headline6!.copyWith(color: Theme.of(context).colorScheme.primary),
                                   ),
                                 )
                               ],
@@ -282,9 +266,7 @@ class BasketScreen extends StatelessWidget {
                                       SizedBox(height: 20),
                                       Text(
                                         "У вас есть промокод?",
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .headline6,
+                                        style: Theme.of(context).textTheme.headline6,
                                       ),
                                       TextButton(
                                         onPressed: () {
@@ -299,20 +281,15 @@ class BasketScreen extends StatelessWidget {
                                         },
                                         child: Text(
                                           "Применить",
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .headline6!
-                                              .copyWith(
-                                                  color: Theme.of(context)
-                                                      .colorScheme
-                                                      .primary),
+                                          style: Theme.of(context).textTheme.headline6!.copyWith(color: Theme.of(context).colorScheme.primary),
                                         ),
                                       )
                                     ],
                                   )
-                                : Text("Your voucher is added!",
-                                    style:
-                                        Theme.of(context).textTheme.headline6);
+                                : Text(
+                                  "Your voucher is added!",
+                                  style:Theme.of(context).textTheme.headline6
+                                );
                           } else {
                             return Text("Something went wrong.");
                           }
@@ -347,7 +324,7 @@ class BasketScreen extends StatelessWidget {
                                   style: Theme.of(context).textTheme.headline6,
                                 ),
                                 Text(
-                                  "\$${state.basket.subtotalString}",
+                                  "${state.basket.subtotalString} тг",
                                   style: Theme.of(context).textTheme.headline6,
                                 )
                               ],
@@ -361,7 +338,7 @@ class BasketScreen extends StatelessWidget {
                                   style: Theme.of(context).textTheme.headline6,
                                 ),
                                 Text(
-                                  "\$5.00",
+                                  "500.00 тг",
                                   style: Theme.of(context).textTheme.headline6,
                                 )
                               ],
@@ -372,23 +349,11 @@ class BasketScreen extends StatelessWidget {
                               children: [
                                 Text(
                                   "Всего",
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .headline5!
-                                      .copyWith(
-                                          color: Theme.of(context)
-                                              .colorScheme
-                                              .primary),
+                                  style: Theme.of(context).textTheme.headline5!.copyWith(color: Theme.of(context).colorScheme.primary),
                                 ),
                                 Text(
-                                  "\$${state.basket.totalString}",
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .headline5!
-                                      .copyWith(
-                                          color: Theme.of(context)
-                                              .colorScheme
-                                              .primary),
+                                  "${state.basket.totalString} тг",
+                                  style: Theme.of(context).textTheme.headline5!.copyWith(color: Theme.of(context).colorScheme.primary),
                                 )
                               ],
                             )
@@ -403,6 +368,7 @@ class BasketScreen extends StatelessWidget {
               ],
             ),
           ),
-        ));
+        )
+    );
   }
 }

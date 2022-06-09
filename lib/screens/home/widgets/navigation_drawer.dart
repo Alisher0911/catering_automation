@@ -1,16 +1,18 @@
 import 'package:catering/bloc/authentication/authentication_bloc.dart';
 import 'package:catering/bloc/userdata/userdata_bloc.dart';
 import 'package:catering/config/text_styles.dart';
+import 'package:catering/screens/order_history/order_history_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 
 class NavigationDrawer extends StatelessWidget {
   const NavigationDrawer({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    Widget _buildDrawerItem(String text, IconData icon) {
+    Widget _buildDrawerItem(String text, IconData icon, VoidCallback callback) {
       return ListTile(
           horizontalTitleGap: 0,
           title: Text(
@@ -22,9 +24,8 @@ class NavigationDrawer extends StatelessWidget {
             icon,
             color: appColor1,
           ),
-          onTap: () {
-            Navigator.pop(context);
-          });
+          onTap: callback
+        );
     }
 
     final drawerHeader = BlocBuilder<UserDataBloc, UserDataState>(
@@ -76,12 +77,84 @@ class NavigationDrawer extends StatelessWidget {
           child: ListView(
             children: [
               drawerHeader,
-              _buildDrawerItem("Мои заказы", CupertinoIcons.square_list_fill),
-              _buildDrawerItem("Мой профиль", CupertinoIcons.person_crop_circle_fill),
-              _buildDrawerItem("Адрес доставки", CupertinoIcons.location_solid),
-              _buildDrawerItem("Способы оплаты", Icons.account_balance_wallet),
-              _buildDrawerItem("Связаться с нами", CupertinoIcons.mail_solid),
-              _buildDrawerItem("Настройки", CupertinoIcons.gear_alt_fill),
+              _buildDrawerItem(
+                "Мои заказы",
+                CupertinoIcons.square_list_fill,
+                () {
+                  pushNewScreenWithRouteSettings(
+                    context,
+                    settings: RouteSettings(name: OrderHistoryScreen.routeName),
+                    screen: OrderHistoryScreen(),
+                    withNavBar: true,
+                    pageTransitionAnimation: PageTransitionAnimation.cupertino,
+                  );
+                }
+              ),
+              _buildDrawerItem(
+                "Мой профиль",
+                CupertinoIcons.person_crop_circle_fill,
+                () {
+                  pushNewScreenWithRouteSettings(
+                    context,
+                    settings: RouteSettings(name: OrderHistoryScreen.routeName),
+                    screen: OrderHistoryScreen(),
+                    withNavBar: true,
+                    pageTransitionAnimation: PageTransitionAnimation.cupertino,
+                  );
+                }
+              ),
+              _buildDrawerItem(
+                "Адрес доставки",
+                CupertinoIcons.location_solid,
+                () {
+                  pushNewScreenWithRouteSettings(
+                    context,
+                    settings: RouteSettings(name: OrderHistoryScreen.routeName),
+                    screen: OrderHistoryScreen(),
+                    withNavBar: true,
+                    pageTransitionAnimation: PageTransitionAnimation.cupertino,
+                  );
+                }
+              ),
+              _buildDrawerItem(
+                "Способы оплаты",
+                Icons.account_balance_wallet,
+                () {
+                  pushNewScreenWithRouteSettings(
+                    context,
+                    settings: RouteSettings(name: OrderHistoryScreen.routeName),
+                    screen: OrderHistoryScreen(),
+                    withNavBar: true,
+                    pageTransitionAnimation: PageTransitionAnimation.cupertino,
+                  );
+                }
+              ),
+              _buildDrawerItem(
+                "Связаться с нами",
+                CupertinoIcons.mail_solid,
+                () {
+                  pushNewScreenWithRouteSettings(
+                    context,
+                    settings: RouteSettings(name: OrderHistoryScreen.routeName),
+                    screen: OrderHistoryScreen(),
+                    withNavBar: true,
+                    pageTransitionAnimation: PageTransitionAnimation.cupertino,
+                  );
+                }
+              ),
+              _buildDrawerItem(
+                "Настройки", 
+                CupertinoIcons.gear_alt_fill,
+                () {
+                  pushNewScreenWithRouteSettings(
+                    context,
+                    settings: RouteSettings(name: OrderHistoryScreen.routeName),
+                    screen: OrderHistoryScreen(),
+                    withNavBar: true,
+                    pageTransitionAnimation: PageTransitionAnimation.cupertino,
+                  );
+                }
+              ),
             ],
           ),
         ),

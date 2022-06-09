@@ -1,13 +1,13 @@
-import 'package:catering/models/restaurant_model.dart';
-import 'package:catering/screens/screens.dart';
-import 'package:catering/widgets/restaurant_tags.dart';
+import 'package:catering/models/local_organization.dart';
+import 'package:catering/screens/local_organization_details/local_organization_details.dart';
+import 'package:catering/widgets/organization/organization_tags.dart';
 import 'package:flutter/material.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 
-class RestaurantCard extends StatelessWidget {
-  final Restaurant restaurant;
+class LocalOrganizationCard extends StatelessWidget {
+  final LocalOrganization localOrganization;
 
-  const RestaurantCard({ Key? key, required this.restaurant }) : super(key: key);
+  const LocalOrganizationCard({ Key? key, required this.localOrganization }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -16,11 +16,10 @@ class RestaurantCard extends StatelessWidget {
       splashColor: Colors.transparent,
       highlightColor: Colors.transparent,
       onTap: () {
-        //Navigator.pushNamed(context, '/restaurant-details', arguments: restaurant);
         pushNewScreenWithRouteSettings(
           context,
-          settings: RouteSettings(name: RestaurantDetailsScreen.routeName),
-          screen: RestaurantDetailsScreen(restaurant: restaurant),
+          settings: RouteSettings(name: LocalOrganizationDetailsScreen.routeName),
+          screen: LocalOrganizationDetailsScreen(id: localOrganization.id),
           withNavBar: true,
           pageTransitionAnimation: PageTransitionAnimation.cupertino,
         );
@@ -28,7 +27,6 @@ class RestaurantCard extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Container(
-          //width: 270,
           decoration: BoxDecoration(
             color: Colors.white,
             borderRadius: BorderRadius.circular(15)
@@ -47,31 +45,11 @@ class RestaurantCard extends StatelessWidget {
                         topRight: Radius.circular(15)
                       ),
                       image: DecorationImage(
-                        image: NetworkImage(restaurant.imageUrl),
-                        fit: BoxFit.cover
+                        image: NetworkImage(localOrganization.urlImage),
+                        fit: BoxFit.fitHeight
                       )
                     ),
                   ),
-    
-                  Positioned(
-                    top: 10,
-                    right: 10,
-                    child: Container(
-                      width: 60,
-                      height: 30,
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(5)
-                      ),
-                      child: Align(
-                        alignment: Alignment.center,
-                        child: Text(
-                          "${restaurant.deliveryTime} min",
-                          style: Theme.of(context).textTheme.bodyText1,
-                        ),
-                      ),
-                    ),
-                  )
                 ],
               ),
     
@@ -80,15 +58,15 @@ class RestaurantCard extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(restaurant.name, style: Theme.of(context).textTheme.headline5),
+                    Text(localOrganization.name, style: Theme.of(context).textTheme.headline5),
     
                     SizedBox(height: 5),
     
-                    Text("${restaurant.distance}km - \$${restaurant.deliveryFee} delivery fee", style: Theme.of(context).textTheme.bodyText1),
+                    Text(localOrganization.address, style: Theme.of(context).textTheme.bodyText1),
     
                     SizedBox(height: 5),
     
-                    RestaurantTags(restaurant: restaurant),
+                    OrganizationTags(categoryID: localOrganization.categoryID),
                   ],
                 ),
               )

@@ -8,7 +8,7 @@ ThemeData theme() {
       primary: Color(0xFF626262),
       onPrimary: Color(0xFFFFFFFF),
       primaryContainer: Color(0xFFFE3C5B),
-      secondary: Color(0xFFe84545),
+      secondary: Color(0xFF49B615),
       onSecondary: Color(0xFFFFFFFF),
       secondaryContainer: Color(0xFFFE3C5B),
       background: Color(0xFF232323),
