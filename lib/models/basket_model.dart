@@ -1,5 +1,6 @@
 import 'package:catering/models/delivery_time_model.dart';
 import 'package:catering/models/menu_item_model.dart';
+import 'package:catering/models/payment_card.dart';
 import 'package:catering/models/voucher_model.dart';
 import 'package:equatable/equatable.dart';
 
@@ -8,31 +9,35 @@ class Basket extends Equatable {
   final bool cutlery;
   final Voucher? voucher;
   final DeliveryTime? deliveryTime;
+  final PaymentCard? paymentCard;
 
   Basket({
     this.items = const <FoodMenuItem>[],
     this.cutlery = false,
     this.voucher,
-    this.deliveryTime
+    this.deliveryTime,
+    this.paymentCard
   });
 
   Basket copyWith({
     List<FoodMenuItem>? items,
     bool? cutlery,
     Voucher? voucher,
-    DeliveryTime? deliveryTime
+    DeliveryTime? deliveryTime,
+    PaymentCard? paymentCard
   }) {
     return Basket(
       items: items ?? this.items,
       cutlery: cutlery ?? this.cutlery,
       voucher: voucher ?? this.voucher,
-      deliveryTime: deliveryTime ?? this.deliveryTime
+      deliveryTime: deliveryTime ?? this.deliveryTime,
+      paymentCard: paymentCard ?? this.paymentCard
     );
   }
 
 
   @override
-  List<Object?> get props => [items, cutlery, voucher, deliveryTime];
+  List<Object?> get props => [items, cutlery, voucher, deliveryTime, paymentCard];
   
   Map itemQuantity(items) {
     var quantity = Map();

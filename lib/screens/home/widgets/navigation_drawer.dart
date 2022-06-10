@@ -2,6 +2,7 @@ import 'package:catering/bloc/authentication/authentication_bloc.dart';
 import 'package:catering/bloc/userdata/userdata_bloc.dart';
 import 'package:catering/config/text_styles.dart';
 import 'package:catering/screens/order_history/order_history_screen.dart';
+import 'package:catering/screens/payment_method/payment_method_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -90,71 +91,71 @@ class NavigationDrawer extends StatelessWidget {
                   );
                 }
               ),
-              _buildDrawerItem(
-                "Мой профиль",
-                CupertinoIcons.person_crop_circle_fill,
-                () {
-                  pushNewScreenWithRouteSettings(
-                    context,
-                    settings: RouteSettings(name: OrderHistoryScreen.routeName),
-                    screen: OrderHistoryScreen(),
-                    withNavBar: true,
-                    pageTransitionAnimation: PageTransitionAnimation.cupertino,
-                  );
-                }
-              ),
-              _buildDrawerItem(
-                "Адрес доставки",
-                CupertinoIcons.location_solid,
-                () {
-                  pushNewScreenWithRouteSettings(
-                    context,
-                    settings: RouteSettings(name: OrderHistoryScreen.routeName),
-                    screen: OrderHistoryScreen(),
-                    withNavBar: true,
-                    pageTransitionAnimation: PageTransitionAnimation.cupertino,
-                  );
-                }
-              ),
+              // _buildDrawerItem(
+              //   "Мой профиль",
+              //   CupertinoIcons.person_crop_circle_fill,
+              //   () {
+              //     pushNewScreenWithRouteSettings(
+              //       context,
+              //       settings: RouteSettings(name: OrderHistoryScreen.routeName),
+              //       screen: OrderHistoryScreen(),
+              //       withNavBar: true,
+              //       pageTransitionAnimation: PageTransitionAnimation.cupertino,
+              //     );
+              //   }
+              // ),
+              // _buildDrawerItem(
+              //   "Адрес доставки",
+              //   CupertinoIcons.location_solid,
+              //   () {
+              //     pushNewScreenWithRouteSettings(
+              //       context,
+              //       settings: RouteSettings(name: OrderHistoryScreen.routeName),
+              //       screen: OrderHistoryScreen(),
+              //       withNavBar: true,
+              //       pageTransitionAnimation: PageTransitionAnimation.cupertino,
+              //     );
+              //   }
+              // ),
               _buildDrawerItem(
                 "Способы оплаты",
                 Icons.account_balance_wallet,
                 () {
                   pushNewScreenWithRouteSettings(
                     context,
-                    settings: RouteSettings(name: OrderHistoryScreen.routeName),
-                    screen: OrderHistoryScreen(),
+                    settings: RouteSettings(name: PaymentMethodScreen.routeName),
+                    screen: PaymentMethodScreen(),
                     withNavBar: true,
                     pageTransitionAnimation: PageTransitionAnimation.cupertino,
                   );
                 }
               ),
-              _buildDrawerItem(
-                "Связаться с нами",
-                CupertinoIcons.mail_solid,
-                () {
-                  pushNewScreenWithRouteSettings(
-                    context,
-                    settings: RouteSettings(name: OrderHistoryScreen.routeName),
-                    screen: OrderHistoryScreen(),
-                    withNavBar: true,
-                    pageTransitionAnimation: PageTransitionAnimation.cupertino,
-                  );
-                }
-              ),
-              _buildDrawerItem(
-                "Настройки", 
-                CupertinoIcons.gear_alt_fill,
-                () {
-                  pushNewScreenWithRouteSettings(
-                    context,
-                    settings: RouteSettings(name: OrderHistoryScreen.routeName),
-                    screen: OrderHistoryScreen(),
-                    withNavBar: true,
-                    pageTransitionAnimation: PageTransitionAnimation.cupertino,
-                  );
-                }
-              ),
+              // _buildDrawerItem(
+              //   "Связаться с нами",
+              //   CupertinoIcons.mail_solid,
+              //   () {
+              //     pushNewScreenWithRouteSettings(
+              //       context,
+              //       settings: RouteSettings(name: OrderHistoryScreen.routeName),
+              //       screen: OrderHistoryScreen(),
+              //       withNavBar: true,
+              //       pageTransitionAnimation: PageTransitionAnimation.cupertino,
+              //     );
+              //   }
+              // ),
+              // _buildDrawerItem(
+              //   "Настройки", 
+              //   CupertinoIcons.gear_alt_fill,
+              //   () {
+              //     pushNewScreenWithRouteSettings(
+              //       context,
+              //       settings: RouteSettings(name: OrderHistoryScreen.routeName),
+              //       screen: OrderHistoryScreen(),
+              //       withNavBar: true,
+              //       pageTransitionAnimation: PageTransitionAnimation.cupertino,
+              //     );
+              //   }
+              // ),
             ],
           ),
         ),

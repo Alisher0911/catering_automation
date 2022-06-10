@@ -1,14 +1,19 @@
+import 'dart:async';
+
 import 'package:bloc/bloc.dart';
 import 'package:catering/models/basket_model.dart';
 import 'package:catering/models/delivery_time_model.dart';
 import 'package:catering/models/menu_item_model.dart';
+import 'package:catering/models/payment_card.dart';
 import 'package:catering/models/voucher_model.dart';
+import 'package:catering/repositories/order_repository.dart';
 import 'package:equatable/equatable.dart';
 
 part 'basket_event.dart';
 part 'basket_state.dart';
 
 class BasketBloc extends Bloc<BasketEvent, BasketState> {
+  
   BasketBloc() : super(BasketLoading()) {
     on<StartBasket>(_onStartBasket);
     on<AddItem>(_onAddItem);
@@ -18,6 +23,7 @@ class BasketBloc extends Bloc<BasketEvent, BasketState> {
     // on<ToggleSwitch>(_onToggleSwitch);
     on<AddVoucher>(_onAddVoucher);
     on<SelectDeliveryTime>(_onSelectDeliveryTime);
+    on<AddPaymentCard>(_onAddPaymentCard);
   }
 
 
@@ -92,6 +98,15 @@ class BasketBloc extends Bloc<BasketEvent, BasketState> {
     if (state is BasketLoaded) {
       try {
         emit(BasketLoaded(basket: state.basket.copyWith(deliveryTime: event.deliveryTime)));
+      } catch (_) {}
+    }
+  }
+
+  void _onAddPaymentCard(AddPaymentCard event, Emitter<BasketState> emit) {
+    final state = this.state;
+    if (state is BasketLoaded) {
+      try {
+        emit(BasketLoaded(basket: state.basket.copyWith(paymentCard: event.paymentCard)));
       } catch (_) {}
     }
   }

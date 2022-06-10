@@ -18,7 +18,8 @@ import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 
 import 'widgets/custom_appbar.dart';
 
-class HomeScreen extends StatelessWidget {
+
+class HomeScreen extends StatefulWidget {
   static const String routeName = '/';
 
   static Route route() {
@@ -26,6 +27,12 @@ class HomeScreen extends StatelessWidget {
         builder: (_) => HomeScreen(), settings: RouteSettings(name: routeName));
   }
 
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+
+class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
@@ -54,88 +61,95 @@ class HomeScreen extends StatelessWidget {
                 child: CircularProgressIndicator(),
               );
             } else if (state is GlobalOrganizationLoaded) {
-              return SingleChildScrollView(
-                child: Column(
-                  mainAxisSize: MainAxisSize.max,
-                  children: [
-                    SizedBox(height: 10),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: SizedBox(
-                        height: 100,  
-                        child: BlocBuilder<CategoryBloc, CategoryState>(
-                          builder: (context, categoryState) {
-                            if (categoryState is CategoryLoading) {
-                              return const Center(
-                                child: CircularProgressIndicator(),
-                              );
-                            } 
-                            else if (categoryState is CategoryLoaded) {
-                              return ListView.builder(
-                                scrollDirection: Axis.horizontal,
-                                shrinkWrap: true,
-                                itemCount: categoryState.categories.length,
-                                itemBuilder: ((context, index) {
-                                  return CategoryBox(
-                                    category: categoryState.categories[index], globalOrganizations: (state is GlobalOrganizationLoaded) ? state.globalOrganizations : []
-                                  );
-                                })
-                              );
-                            }
-                            else if (categoryState is CategoryError) {
-                              return Center(
-                                child: Text("Не удалось загрузить категории", style: Theme.of(context).textTheme.headline3!.copyWith(color: Colors.white)),
-                              );
-                            }
-                            else {
-                              return Center(
-                                child: Text("Не удалось загрузить категории", style: Theme.of(context).textTheme.headline3!.copyWith(color: Colors.white)),
-                              );
-                            }
-                          },
+              return RefreshIndicator(
+                backgroundColor: Theme.of(context).colorScheme.secondary,
+                color: Colors.white,
+                onRefresh: () async {
+                  setState(() {});
+                },
+                child: SingleChildScrollView(
+                  child: Column(
+                    mainAxisSize: MainAxisSize.max,
+                    children: [
+                      SizedBox(height: 10),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: SizedBox(
+                          height: 100,  
+                          child: BlocBuilder<CategoryBloc, CategoryState>(
+                            builder: (context, categoryState) {
+                              if (categoryState is CategoryLoading) {
+                                return const Center(
+                                  child: CircularProgressIndicator(),
+                                );
+                              } 
+                              else if (categoryState is CategoryLoaded) {
+                                return ListView.builder(
+                                  scrollDirection: Axis.horizontal,
+                                  shrinkWrap: true,
+                                  itemCount: categoryState.categories.length,
+                                  itemBuilder: ((context, index) {
+                                    return CategoryBox(
+                                      category: categoryState.categories[index], globalOrganizations: (state is GlobalOrganizationLoaded) ? state.globalOrganizations : []
+                                    );
+                                  })
+                                );
+                              }
+                              else if (categoryState is CategoryError) {
+                                return Center(
+                                  child: Text("Не удалось загрузить категории", style: Theme.of(context).textTheme.headline3!.copyWith(color: Colors.white)),
+                                );
+                              }
+                              else {
+                                return Center(
+                                  child: Text("Не удалось загрузить категории", style: Theme.of(context).textTheme.headline3!.copyWith(color: Colors.white)),
+                                );
+                              }
+                            },
+                          ),
                         ),
                       ),
-                    ),
-      
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: SizedBox(
-                        height: 125,
-                        child: ListView.builder(
-                          scrollDirection: Axis.horizontal,
-                          shrinkWrap: true,
-                          itemCount: Promo.promos.length,
-                          itemBuilder: (context, index) {
-                            return PromoBox(promo: Promo.promos[index]);
-                          }
+                    
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: SizedBox(
+                          height: 125,
+                          child: ListView.builder(
+                            scrollDirection: Axis.horizontal,
+                            shrinkWrap: true,
+                            itemCount: Promo.promos.length,
+                            itemBuilder: (context, index) {
+                              return PromoBox(promo: Promo.promos[index]);
+                            }
+                          ),
                         ),
                       ),
-                    ),
-      
-                    OrganizationSearchBox(),
-      
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Align(
-                          alignment: Alignment.topLeft,
-                          child: Text(
-                            "Организации",
-                            style: Theme.of(context).textTheme.headline3!.copyWith(fontStyle: FontStyle.italic, fontFamily: "Nunito", fontWeight: FontWeight.w700, color: Colors.white)
-                          )
+                    
+                      OrganizationSearchBox(),
+                    
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Align(
+                            alignment: Alignment.topLeft,
+                            child: Text(
+                              "Организации",
+                              style: Theme.of(context).textTheme.headline3!.copyWith(fontStyle: FontStyle.italic, fontFamily: "Nunito", fontWeight: FontWeight.w700, color: Colors.white)
+                            )
+                        )
+                      ),
+                    
+                      ListView.builder(
+                        physics: NeverScrollableScrollPhysics(),
+                        shrinkWrap: true,
+                        itemCount: state.globalOrganizations.length,
+                        itemBuilder: (context, index) {
+                          return GlobalOrganizationCard(
+                              globalOrganization: state.globalOrganizations[index]);
+                        }
                       )
-                    ),
-                  
-                    ListView.builder(
-                      physics: NeverScrollableScrollPhysics(),
-                      shrinkWrap: true,
-                      itemCount: state.globalOrganizations.length,
-                      itemBuilder: (context, index) {
-                        return GlobalOrganizationCard(
-                            globalOrganization: state.globalOrganizations[index]);
-                      }
-                    )
-                  ],
-                )
+                    ],
+                  )
+                ),
               );
             } else if (state is GlobalOrganizationError) {
               return Center(

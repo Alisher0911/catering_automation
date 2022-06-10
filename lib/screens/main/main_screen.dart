@@ -1,17 +1,17 @@
+import 'dart:async';
+
 import 'package:badges/badges.dart';
 import 'package:catering/bloc/authentication/authentication_bloc.dart';
 import 'package:catering/bloc/basket/basket_bloc.dart';
-import 'package:catering/bloc/place/place_bloc.dart';
-import 'package:catering/bloc/restaurant/restaurant_bloc.dart';
 import 'package:catering/bloc/userdata/userdata_bloc.dart';
 import 'package:catering/config/text_styles.dart';
-import 'package:catering/repositories/restaurant_repository.dart';
 import 'package:catering/repositories/user_repository.dart';
 import 'package:catering/screens/screens.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
+
 
 class MainScreen extends StatelessWidget {
   static const String routeName = '/main';
@@ -25,6 +25,7 @@ class MainScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
     final PersistentTabController _controller =
         PersistentTabController(initialIndex: 0);
 
@@ -49,16 +50,25 @@ class MainScreen extends StatelessWidget {
           icon: Icon(CupertinoIcons.location_solid),
           activeColorPrimary: appColor2,
           inactiveColorPrimary: CupertinoColors.systemGrey,
+          onPressed: (bc) {
+          }
         ),
         PersistentBottomNavBarItem(
-            icon: Icon(CupertinoIcons.qrcode_viewfinder),
-            iconSize: 40,
-            activeColorPrimary: Color(0xFFFFC529),
-            inactiveColorPrimary: Color(0xFFFFC529),
-            onPressed: (bc) {
-              Navigator.of(context).push(
-                  MaterialPageRoute(builder: (builder) => QRScannerScreen()));
-            }),
+          icon: Icon(CupertinoIcons.qrcode_viewfinder),
+          iconSize: 40,
+          activeColorPrimary: Color(0xFFFFC529),
+          inactiveColorPrimary: Color(0xFFFFC529),
+          // onPressed: (bc) {
+          //   pushNewScreen(
+          //     context,
+          //     screen: QRScannerScreen(),
+          //     withNavBar: true,
+          //     pageTransitionAnimation: PageTransitionAnimation.cupertino,
+          //   );
+          //   // Navigator.of(bc!).push(
+          //   //     MaterialPageRoute(builder: (builder) => QRScannerScreen()));
+          // }
+        ),
         PersistentBottomNavBarItem(
           icon: Icon(CupertinoIcons.heart_fill),
           activeColorPrimary: appColor2,

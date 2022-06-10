@@ -66,6 +66,15 @@ class AddVoucher extends BasketEvent {
   List<Object> get props => [voucher];
 }
 
+class AddPaymentCard extends BasketEvent {
+  final PaymentCard paymentCard;
+
+  const AddPaymentCard(this.paymentCard);
+
+  @override
+  List<Object> get props => [paymentCard];
+}
+
 
 class SelectDeliveryTime extends BasketEvent {
   final DeliveryTime deliveryTime;

@@ -220,12 +220,6 @@ class _LoginFormState extends State<LoginForm> {
                               ),
                               child: IconButton(
                                 onPressed: () {
-                                  // BlocProvider.of<LoginBloc>(context).add(
-                                  //   LoginButtonPressed(
-                                  //     email: emailController.text,
-                                  //     password: passwordController.text
-                                  //   )
-                                  // );
                                   context.read<LoginBloc>().add(
                                     LoginButtonPressed(
                                       email: emailController.text,

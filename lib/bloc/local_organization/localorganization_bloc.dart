@@ -83,6 +83,8 @@ class LocalOrganizationBloc extends Bloc<LocalOrganizationEvent, LocalOrganizati
       if (isSignedIn) {
         final localOrganization = await _restaurantRepository.getLocalOrganizationById(event.id);
         final globalOrganization = await _restaurantRepository.getGlobalOrganizationById(localOrganization.generalOrganizationID);
+        storage.write(key: "orgID", value: globalOrganization.id.toString());
+        storage.write(key: "address", value: localOrganization.address);
 
         final categories = await _categoryRepository.getCategories();
         final globalOrganizationCategories = categories.where((category) => globalOrganization.foodTypes.contains(category.id)).toList();

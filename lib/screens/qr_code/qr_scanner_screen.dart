@@ -1,17 +1,22 @@
+import 'dart:async';
 import 'dart:io';
 
-import 'package:catering/bloc/restaurant/restaurant_bloc.dart';
 import 'package:catering/config/text_styles.dart';
 import 'package:catering/screens/local_organization_details/local_organization_details.dart';
-import 'package:catering/screens/screens.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
 
 class QRScannerScreen extends StatefulWidget {
-  const QRScannerScreen({ Key? key }) : super(key: key);
+  static const String routeName = '/qr-scanner';
+
+  static Route route() {
+    return MaterialPageRoute(
+        builder: (_) => QRScannerScreen(),
+        settings: RouteSettings(name: routeName));
+  }
+
+  const QRScannerScreen({ Key? key, }) : super(key: key);
 
   @override
   State<QRScannerScreen> createState() => _QRScannerScreenState();
@@ -91,16 +96,6 @@ class _QRScannerScreenState extends State<QRScannerScreen> {
               onQRViewCreated: _onQRViewCreated,
             ),
           ),
-          // Expanded(
-          //   flex: 1,
-          //   child: Center(
-          //     child: (result != null)
-          //         ? Text(
-          //             'Barcode Type: ${describeEnum(result!.format)}   Data: ${result!.code}'
-          //           )
-          //         : Text('Scan a code'),
-          //   ),
-          // )
         ],
       ),
     );
@@ -110,7 +105,7 @@ class _QRScannerScreenState extends State<QRScannerScreen> {
   void _onQRViewCreated(QRViewController controller) {
     this.controller = controller;
     controller.scannedDataStream.listen((scanData) {
-      this.controller!.pauseCamera();
+      // this.controller!.pauseCamera();
       setState(() {
         result = scanData;
       });
@@ -122,21 +117,6 @@ class _QRScannerScreenState extends State<QRScannerScreen> {
         withNavBar: true,
         pageTransitionAnimation: PageTransitionAnimation.cupertino,
       );
-      // BlocListener<RestaurantBloc, RestaurantState>(
-      //   listener: (context, state) {
-      //     if (state is RestaurantLoaded) {
-      //       pushNewScreenWithRouteSettings(
-      //         context,
-      //         settings: RouteSettings(name: RestaurantDetailsScreen.routeName),
-      //         screen: RestaurantDetailsScreen(restaurant: state.restaurants.firstWhere((restaurant) => restaurant.id.toString() == result!.code)),
-      //         withNavBar: true,
-      //         pageTransitionAnimation: PageTransitionAnimation.cupertino,
-      //       );
-      //     } else {
-      //       print("not loaded");
-      //     }
-      //   },
-      // );
     });
   }
 

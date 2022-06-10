@@ -59,30 +59,30 @@ class LocalOrganizationInformation extends StatelessWidget {
             )
           ],
         ),
-        InkWell(
-          splashColor: Colors.transparent,
-          highlightColor: Colors.transparent,
-          onTap: () {
-            _showTables(context, localOrganization);
-          },
-          child: Container(
-            padding: EdgeInsets.symmetric(horizontal: 10, vertical: 7.5),
-            decoration: BoxDecoration(
-                color: Colors.white, borderRadius: BorderRadius.circular(15)),
-            child: //IconButton(
-                // onPressed: () {
-                //   _showTables(context);
-                // },
-                // padding: EdgeInsets.zero,
-                // constraints: BoxConstraints(),
-                Icon(
-              Icons.table_restaurant_rounded,
-              color: Color(0xFF45BFE4),
-              size: 25,
-            ),
-            //),
-          ),
-        )
+        // InkWell(
+        //   splashColor: Colors.transparent,
+        //   highlightColor: Colors.transparent,
+        //   onTap: () {
+        //     _showTables(context, localOrganization);
+        //   },
+        //   child: Container(
+        //     padding: EdgeInsets.symmetric(horizontal: 10, vertical: 7.5),
+        //     decoration: BoxDecoration(
+        //         color: Colors.white, borderRadius: BorderRadius.circular(15)),
+        //     child: //IconButton(
+        //         // onPressed: () {
+        //         //   _showTables(context);
+        //         // },
+        //         // padding: EdgeInsets.zero,
+        //         // constraints: BoxConstraints(),
+        //         Icon(
+        //       Icons.table_restaurant_rounded,
+        //       color: Color(0xFF45BFE4),
+        //       size: 25,
+        //     ),
+        //     //),
+        //   ),
+        // )
       ]),
     );
   }
