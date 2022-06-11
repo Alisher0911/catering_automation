@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:catering/bloc/basket/basket_bloc.dart';
 import 'package:catering/bloc/geolocation/geolocation_bloc.dart';
 import 'package:catering/bloc/local_organization/localorganization_bloc.dart';
 import 'package:catering/bloc/place/place_bloc.dart';
@@ -69,7 +70,7 @@ class LocationScreen extends StatelessWidget {
 
     return MultiBlocProvider(
       providers: [
-        BlocProvider(create: (context) => LocalOrganizationBloc(restaurantRepository: context.read<RestaurantRepository>(), categoryRepository: context.read<CategoryRepository>(), geolocationRepository: context.read<GeolocationRepository>(), placeBloc: context.read<PlaceBloc>())..add(LoadLocalOrganizations())),
+        BlocProvider(create: (context) => LocalOrganizationBloc(restaurantRepository: context.read<RestaurantRepository>(), categoryRepository: context.read<CategoryRepository>(), geolocationRepository: context.read<GeolocationRepository>(), placeBloc: context.read<PlaceBloc>(), basketBloc: context.read<BasketBloc>())..add(LoadLocalOrganizations())),
       ],
       child: Scaffold(
           body: Stack(

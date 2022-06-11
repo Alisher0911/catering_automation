@@ -18,6 +18,5 @@ class PaymentCard extends Equatable {
 
   static List<PaymentCard> paymentCards = [
     PaymentCard(cardNumber: "1111222233334444", cardHolderName: "Alisher Orazbay", expiryDate: "01/22", image: "assets/payment/mastercard.png"),
-    PaymentCard(cardNumber: "1234123412341234", cardHolderName: "Sanat Sherim", expiryDate: "03/23", image: "assets/payment/mastercard.png"),
   ];
 }

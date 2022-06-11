@@ -46,7 +46,7 @@ class GlobalOrganizationCard extends StatelessWidget {
                       ),
                       image: DecorationImage(
                         image: NetworkImage(globalOrganization.urlImage),
-                        fit: BoxFit.fitHeight
+                        fit: BoxFit.cover
                       )
                     ),
                   ),

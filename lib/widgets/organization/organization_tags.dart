@@ -1,4 +1,5 @@
 import 'package:catering/bloc/category/category_bloc.dart';
+import 'package:catering/models/org_type.dart';
 import 'package:catering/repositories/category_repository.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -32,8 +33,8 @@ class OrganizationTags extends StatelessWidget {
               );
             } else if (state is CategoryLoaded) {
               return Row(
-                children: state.categories
-                  .where((category) => categoryID == category.id)
+                children: OrgType.orgTypes
+                  .where((orgType) => categoryID == orgType.id)
                   .map((tag) =>
                     Container(
                       padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
@@ -42,7 +43,7 @@ class OrganizationTags extends StatelessWidget {
                         color: Color(0xFFF6F6F6),
                         borderRadius: BorderRadius.circular(5)
                       ),
-                      child: Text(tag.name),
+                      child: Text(tag.type),
                     )
                   ).toList()
               );

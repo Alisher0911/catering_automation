@@ -64,33 +64,33 @@ class MenuItemCard extends StatelessWidget {
                   ),
                 ),
 
-                Positioned(
-                  top: 10,
-                  right: 10,
-                  child: Glassmorphism(
-                    blur: 5,
-                    opacity: 0.1,
-                    child: Container(
-                      padding: const EdgeInsets.all(2),
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                      ),
-                      child: IconButton(
-                        splashColor: Colors.transparent,
-                        highlightColor: Colors.transparent,
-                        onPressed: () {
-                        },
-                        // iconSize: 16,
-                        padding: EdgeInsets.zero,
-                        constraints: BoxConstraints(),
-                        icon: Icon(
-                          CupertinoIcons.heart_fill,
-                          color: Colors.white,
-                        )
-                      ),
-                    ),
-                  )
-                )
+                // Positioned(
+                //   top: 10,
+                //   right: 10,
+                //   child: Glassmorphism(
+                //     blur: 5,
+                //     opacity: 0.1,
+                //     child: Container(
+                //       padding: const EdgeInsets.all(2),
+                //       decoration: BoxDecoration(
+                //         shape: BoxShape.circle,
+                //       ),
+                //       child: IconButton(
+                //         splashColor: Colors.transparent,
+                //         highlightColor: Colors.transparent,
+                //         onPressed: () {
+                //         },
+                //         // iconSize: 16,
+                //         padding: EdgeInsets.zero,
+                //         constraints: BoxConstraints(),
+                //         icon: Icon(
+                //           CupertinoIcons.heart_fill,
+                //           color: Colors.white,
+                //         )
+                //       ),
+                //     ),
+                //   )
+                // )
               ],
             ),
 
@@ -101,14 +101,16 @@ class MenuItemCard extends StatelessWidget {
                 children: [
                   Text(
                     menuItem.title,
+                    overflow: TextOverflow.ellipsis,
+                    maxLines: 1,
                     style: Theme.of(context).textTheme.headline6!.copyWith(
                         color: Colors.black, fontStyle: FontStyle.italic),
                   ),
-                  SizedBox(height: 5),
-                  Text(
-                    menuItem.description,
-                    style: Theme.of(context).textTheme.bodyText1!.copyWith(color: Color(0xFF9796A1)),
-                  ),
+                  // SizedBox(height: 5),
+                  // Text(
+                  //   menuItem.description,
+                  //   style: Theme.of(context).textTheme.bodyText1!.copyWith(color: Color(0xFF9796A1)),
+                  // ),
                 ],
               ),
             )

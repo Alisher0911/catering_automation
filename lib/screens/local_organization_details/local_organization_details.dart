@@ -1,3 +1,4 @@
+import 'package:catering/bloc/basket/basket_bloc.dart';
 import 'package:catering/bloc/local_organization/localorganization_bloc.dart';
 import 'package:catering/bloc/place/place_bloc.dart';
 import 'package:catering/models/category_model.dart';
@@ -30,7 +31,7 @@ class LocalOrganizationDetailsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider(create: (context) => LocalOrganizationBloc(restaurantRepository: context.read<RestaurantRepository>(), categoryRepository: context.read<CategoryRepository>(), geolocationRepository: context.read<GeolocationRepository>(), placeBloc: context.read<PlaceBloc>())..add(LoadLocalOrganizationById(id: id))),
+        BlocProvider(create: (context) => LocalOrganizationBloc(restaurantRepository: context.read<RestaurantRepository>(), categoryRepository: context.read<CategoryRepository>(), geolocationRepository: context.read<GeolocationRepository>(), placeBloc: context.read<PlaceBloc>(), basketBloc: context.read<BasketBloc>())..add(LoadLocalOrganizationById(id: id))),
       ],
       child: Scaffold(
         backgroundColor: Theme.of(context).colorScheme.background,

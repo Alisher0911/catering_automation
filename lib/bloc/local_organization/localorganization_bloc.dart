@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
+import 'package:catering/bloc/basket/basket_bloc.dart';
 import 'package:catering/bloc/place/place_bloc.dart';
 import 'package:catering/config/secure_storage.dart';
 import 'package:catering/models/category_model.dart';
@@ -19,7 +20,8 @@ class LocalOrganizationBloc extends Bloc<LocalOrganizationEvent, LocalOrganizati
   final RestaurantRepository _restaurantRepository;
   final CategoryRepository _categoryRepository;
   final GeolocationRepository _geolocationRepository;
-  final PlaceBloc placeBloc;
+  final PlaceBloc _placeBloc;
+  final BasketBloc _basketBloc;
   StreamSubscription? _orgSubscription;
   final storage = SecureStorageService.getInstance;
 
@@ -27,10 +29,13 @@ class LocalOrganizationBloc extends Bloc<LocalOrganizationEvent, LocalOrganizati
     required RestaurantRepository restaurantRepository,
     required CategoryRepository categoryRepository,
     required GeolocationRepository geolocationRepository,
-    required this.placeBloc,
+    required PlaceBloc placeBloc,
+    required BasketBloc basketBloc
   }) : _restaurantRepository = restaurantRepository,
         _categoryRepository = categoryRepository,
         _geolocationRepository = geolocationRepository,
+        _placeBloc = placeBloc,
+        _basketBloc = basketBloc,
         super(LocalOrganizationsByGlobalIdLoading()) {
           on<LoadLocalOrganizations>(_onLoadLocalOrganizations);
           on<LoadLocalOrganizationsByGlobalId>(_onLoadLocalOrganizationByGlobalId);
@@ -85,6 +90,7 @@ class LocalOrganizationBloc extends Bloc<LocalOrganizationEvent, LocalOrganizati
         final globalOrganization = await _restaurantRepository.getGlobalOrganizationById(localOrganization.generalOrganizationID);
         storage.write(key: "orgID", value: globalOrganization.id.toString());
         storage.write(key: "address", value: localOrganization.address);
+        _basketBloc.add(ClearBasket());
 
         final categories = await _categoryRepository.getCategories();
         final globalOrganizationCategories = categories.where((category) => globalOrganization.foodTypes.contains(category.id)).toList();

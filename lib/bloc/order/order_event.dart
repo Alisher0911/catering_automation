@@ -15,3 +15,18 @@ class CreateOrder extends OrderEvent {
   @override
   List<Object> get props => [basket];
 }
+
+
+class LoadOrderHisory extends OrderEvent {
+  @override
+  List<Object> get props => [];
+}
+
+class LoadOrderItems extends OrderEvent {
+  final int id;
+
+  const LoadOrderItems(this.id);
+
+  @override
+  List<Object> get props => [];
+}

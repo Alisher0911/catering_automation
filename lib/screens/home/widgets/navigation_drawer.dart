@@ -51,7 +51,7 @@ class NavigationDrawer extends StatelessWidget {
             ),
             currentAccountPicture: const CircleAvatar(
               // child: FlutterLogo(size: 42.0),
-              backgroundImage: AssetImage("assets/sanat.jpeg"),
+              backgroundImage: AssetImage("assets/user.png"),
             ),
           );
         } else if (state is UserDataError) {

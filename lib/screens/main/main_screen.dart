@@ -23,6 +23,15 @@ class MainScreen extends StatelessWidget {
         builder: (_) => MainScreen(), settings: RouteSettings(name: routeName));
   }
 
+  void listenCloseQr(PersistentTabController controller, Function onClose) {
+    controller.addListener(() {
+      if (controller.index != 2) {
+        onClose();
+      }
+    });
+  }
+
+
   @override
   Widget build(BuildContext context) {
 
@@ -33,8 +42,8 @@ class MainScreen extends StatelessWidget {
       return [
         HomeScreen(),
         LocationScreen(),
-        QRScannerScreen(),
-        FavouriteScreen(),
+        QRScannerScreen(qrListener: listenCloseQr, controller: _controller),
+        // FavouriteScreen(),
         BasketScreen()
       ];
     }
@@ -50,30 +59,18 @@ class MainScreen extends StatelessWidget {
           icon: Icon(CupertinoIcons.location_solid),
           activeColorPrimary: appColor2,
           inactiveColorPrimary: CupertinoColors.systemGrey,
-          onPressed: (bc) {
-          }
         ),
         PersistentBottomNavBarItem(
           icon: Icon(CupertinoIcons.qrcode_viewfinder),
-          iconSize: 40,
-          activeColorPrimary: Color(0xFFFFC529),
-          inactiveColorPrimary: Color(0xFFFFC529),
-          // onPressed: (bc) {
-          //   pushNewScreen(
-          //     context,
-          //     screen: QRScannerScreen(),
-          //     withNavBar: true,
-          //     pageTransitionAnimation: PageTransitionAnimation.cupertino,
-          //   );
-          //   // Navigator.of(bc!).push(
-          //   //     MaterialPageRoute(builder: (builder) => QRScannerScreen()));
-          // }
-        ),
-        PersistentBottomNavBarItem(
-          icon: Icon(CupertinoIcons.heart_fill),
+          iconSize: 35,
           activeColorPrimary: appColor2,
           inactiveColorPrimary: CupertinoColors.systemGrey,
         ),
+        // PersistentBottomNavBarItem(
+        //   icon: Icon(CupertinoIcons.heart_fill),
+        //   activeColorPrimary: appColor2,
+        //   inactiveColorPrimary: CupertinoColors.systemGrey,
+        // ),
         PersistentBottomNavBarItem(
           icon: BlocBuilder<BasketBloc, BasketState>(
             builder: (context, state) {
@@ -100,6 +97,7 @@ class MainScreen extends StatelessWidget {
         ),
       ];
     }
+    
 
     return MultiBlocProvider(
       providers: [

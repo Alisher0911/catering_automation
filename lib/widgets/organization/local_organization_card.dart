@@ -46,7 +46,7 @@ class LocalOrganizationCard extends StatelessWidget {
                       ),
                       image: DecorationImage(
                         image: NetworkImage(localOrganization.urlImage),
-                        fit: BoxFit.fitHeight
+                        fit: BoxFit.cover
                       )
                     ),
                   ),

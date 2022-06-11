@@ -33,7 +33,7 @@ class GlobalOrganization extends Equatable {
     name: json["name"] ?? "", 
     description: json["description"] ?? "", 
     urlImage: json["urlImage"] ?? "https://images.pexels.com/photos/6267/menu-restaurant-vintage-table.jpg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
-    foodTypes: ((json["foodTypes"] ?? [1,2,3]) as List<dynamic>).cast<int>(),
+    foodTypes: ((json["foodTypes"] ?? [1,2,3,4,5]) as List<dynamic>).cast<int>(),
     category: (json["category"] as List<dynamic>).cast<String>()
   );
 

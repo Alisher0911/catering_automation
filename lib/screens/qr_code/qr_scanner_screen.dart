@@ -10,13 +10,18 @@ import 'package:qr_code_scanner/qr_code_scanner.dart';
 class QRScannerScreen extends StatefulWidget {
   static const String routeName = '/qr-scanner';
 
-  static Route route() {
-    return MaterialPageRoute(
-        builder: (_) => QRScannerScreen(),
-        settings: RouteSettings(name: routeName));
-  }
+  // static Route route() {
+  //   return MaterialPageRoute(
+  //       builder: (_) => QRScannerScreen(),
+  //       settings: RouteSettings(name: routeName));
+  // }
 
-  const QRScannerScreen({ Key? key, }) : super(key: key);
+  const QRScannerScreen({Key? key, required this.qrListener, required this.controller})
+      : super(key: key);
+
+  final Function(PersistentTabController controller, Function onClose) qrListener;
+  final PersistentTabController controller;
+  // const QRScannerScreen({ Key? key, }) : super(key: key);
 
   @override
   State<QRScannerScreen> createState() => _QRScannerScreenState();
@@ -26,6 +31,17 @@ class _QRScannerScreenState extends State<QRScannerScreen> {
   final GlobalKey qrKey = GlobalKey(debugLabel: 'QR');
   Barcode? result;
   QRViewController? controller;
+
+  @override
+  void initState() {
+    widget.qrListener(widget.controller, () {
+      if (controller != null) {
+        controller!.dispose();
+        controller!.pauseCamera();
+      }
+    });
+    super.initState();
+  }
 
   @override
   void reassemble() {
@@ -61,19 +77,19 @@ class _QRScannerScreenState extends State<QRScannerScreen> {
                 titleSpacing: 0,
                 centerTitle: true,
                 backgroundColor: Theme.of(context).colorScheme.background,
-                leading: IconButton(
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  },
-                  icon: Icon(
-                    Icons.arrow_back_ios,
-                    color: Colors.white,
-                  )
-                ),
                 title: Text(
                   "Сканировать QR",
                   style: Theme.of(context).textTheme.headline3!.copyWith(color: Color(0xFF8C9099)),
                 ),
+                actions: [
+                  IconButton(
+                    onPressed: () {
+                      controller!.resumeCamera();
+                    },
+                    icon: Icon(
+                      Icons.refresh)
+                    )
+                ],
               ),
             ],
           ),
@@ -83,7 +99,7 @@ class _QRScannerScreenState extends State<QRScannerScreen> {
       body: Column(
         children: <Widget>[
           Expanded(
-            flex: 5,
+            // flex: 5,
             child: QRView(
               key: qrKey,
               overlay: QrScannerOverlayShape(
@@ -96,6 +112,29 @@ class _QRScannerScreenState extends State<QRScannerScreen> {
               onQRViewCreated: _onQRViewCreated,
             ),
           ),
+
+          // Container(
+          //   height: 100,
+          //   color: Colors.transparent,
+          //   child: Row(
+          //     crossAxisAlignment: CrossAxisAlignment.center,
+          //     mainAxisAlignment: MainAxisAlignment.center,
+          //     children: [
+          //       ElevatedButton(
+          //         onPressed: () {
+          //           controller!.pauseCamera();
+          //         }, 
+          //         child: Text("Pause")
+          //       ),
+          //       ElevatedButton(
+          //         onPressed: () {
+          //           controller!.resumeCamera();
+          //         }, 
+          //         child: Text("Resume")
+          //       )
+          //     ],
+          //   )
+          // ),
         ],
       ),
     );
@@ -105,7 +144,7 @@ class _QRScannerScreenState extends State<QRScannerScreen> {
   void _onQRViewCreated(QRViewController controller) {
     this.controller = controller;
     controller.scannedDataStream.listen((scanData) {
-      // this.controller!.pauseCamera();
+      this.controller!.pauseCamera();
       setState(() {
         result = scanData;
       });

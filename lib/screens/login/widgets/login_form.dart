@@ -180,7 +180,7 @@ class _LoginFormState extends State<LoginForm> {
                                 ))
                           ],
                         ),
-                        SizedBox(height: 40),
+                        SizedBox(height: 55),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [

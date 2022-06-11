@@ -46,24 +46,28 @@ class CustomAppBar extends StatelessWidget with PreferredSizeWidget {
                 fit: BoxFit.scaleDown
               ),
             ),
-            actions: [
-              actionButton ?? Container()
-            ],
-            title: Column(children: [
-              Text(
-                "Deliver to",
-                style: Theme.of(context)
-                    .textTheme
-                    .headline6!
-                    .copyWith(color: Color(0xFF8C9099)),
-              ),
-              SizedBox(height: 7),
-              Text("Mangilik El 56, 77",
-                  style: Theme.of(context)
-                      .textTheme
-                      .headline5!
-                      .copyWith(color: appColor1))
-            ]),
+            // actions: [
+            //   actionButton ?? Container()
+            // ],
+            title: Text(
+              "Happy Food",
+              style: Theme.of(context).textTheme.headline3!.copyWith(color: Color(0xFF8C9099)),
+            ),
+            // title: Column(children: [
+            //   Text(
+            //     "Deliver to",
+            //     style: Theme.of(context)
+            //         .textTheme
+            //         .headline6!
+            //         .copyWith(color: Color(0xFF8C9099)),
+            //   ),
+            //   SizedBox(height: 7),
+            //   Text("Mangilik El 56, 77",
+            //       style: Theme.of(context)
+            //           .textTheme
+            //           .headline5!
+            //           .copyWith(color: appColor1))
+            // ]),
           ),
         ],
       ),

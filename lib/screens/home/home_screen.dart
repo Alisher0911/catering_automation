@@ -1,11 +1,9 @@
 import 'package:catering/bloc/category/category_bloc.dart';
 import 'package:catering/bloc/place/place_bloc.dart';
 import 'package:catering/bloc/restaurant/restaurant_bloc.dart';
-import 'package:catering/models/category_model.dart';
 import 'package:catering/models/promo_model.dart';
 import 'package:catering/repositories/category_repository.dart';
 import 'package:catering/repositories/restaurant_repository.dart';
-import 'package:catering/screens/global_organizations_listing/global_organizations_listing_screen.dart';
 import 'package:catering/screens/home/widgets/navigation_drawer.dart';
 import 'package:catering/widgets/category_box.dart';
 import 'package:catering/screens/home/widgets/organization_search_box.dart';
@@ -14,7 +12,6 @@ import 'package:catering/widgets/promo_box.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 
 import 'widgets/custom_appbar.dart';
 
@@ -66,6 +63,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 color: Colors.white,
                 onRefresh: () async {
                   setState(() {});
+                  context.read<RestaurantBloc>().add(LoadGlobalOrganizations());
                 },
                 child: SingleChildScrollView(
                   child: Column(
